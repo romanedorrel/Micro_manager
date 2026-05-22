@@ -18,9 +18,9 @@ function App() {
         <main>
           <Routes>
             <Route path="/" element={<Today />} />
-            <Route path="/Goal/Current" element={<CurrentGoals />} />
-            <Route path="/Goal/Completed" element={<CompletedGoals />} />
-            <Route path="/Goal/AddNew" element={<AddNew />} />
+            <Route path="/Goals/Current" element={<CurrentGoals />} />
+            <Route path="/Goals/Completed" element={<CompletedGoals />} />
+            <Route path="/Goals/AddNew" element={<AddNew />} />
             <Route path="/Calendar/Detailed" element={<Detailed />} />
             <Route path="/Calendar/Overview" element={<Overview />} />
             <Route path="/Profile/Settings" element={<Settings />} />

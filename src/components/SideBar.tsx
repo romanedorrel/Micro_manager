@@ -1,11 +1,11 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import {
   CalendarDays,
   Calendar,
   Target,
-  PlusCircle,
-  CheckCircle,
+  // PlusCircle,
+  // CheckCircle,
   User,
   Settings,
   LogOut,
@@ -14,14 +14,16 @@ import {
   Menu,
   LayoutDashboard,
   PanelsTopLeft,
+  Quote,
 } from "lucide-react";
+import QuotesCard from "./QuotesCard";
 
 const SideBar = () => {
-  const [goalsOpen, setGoalsOpen] = useState(false);
+  // const [goalsOpen, setGoalsOpen] = useState(false);
   const [calendarOpen, setCalendarOpen] = useState(false);
   const [profileOpen, setProfileOpen] = useState(false);
 
-  const toggleGoals = () => setGoalsOpen(!goalsOpen);
+  // const toggleGoals = () => setGoalsOpen(!goalsOpen);
   const toggleCalendar = () => setCalendarOpen(!calendarOpen);
   const toggleProfile = () => setProfileOpen(!profileOpen);
   return (
@@ -46,61 +48,24 @@ const SideBar = () => {
                 <User size={14} /> <span>Manage Account</span>
               </Link>
             </li>
-            <li>
-              <button>
-                <LogOut size={14} /> <span>Log Out</span>
-              </button>
-            </li>
           </ul>
         )}
       </div>
       <nav>
         <ul>
           <li>
-            <Link to="/">
+            <NavLink to="/">
               <div className="items-left">
                 <CalendarDays size={18} /> <span>Today</span>
               </div>
-            </Link>
+            </NavLink>
           </li>
           <li>
-            <button onClick={toggleGoals}>
+            <NavLink to="/goals/current">
               <div className="items-left">
-                <Target size={18} />
-                <span>Goals</span>
+                <Target size={18} /> <span>Goals</span>
               </div>
-
-              {goalsOpen ? (
-                <ChevronDown size={18} />
-              ) : (
-                <ChevronRight size={18} />
-              )}
-            </button>
-            {goalsOpen && (
-              <ul>
-                <li>
-                  <Link to="/Goal/Current">
-                    <div className="items-left">
-                      <Target size={14} /> <span>Current Goals</span>
-                    </div>
-                  </Link>
-                </li>
-                <li>
-                  <Link to="/Goal/Completed">
-                    <div className="items-left">
-                      <CheckCircle size={14} /> <span>Completed Goals</span>
-                    </div>
-                  </Link>
-                </li>
-                <li>
-                  <Link to="/Goal/AddNew">
-                    <div className="items-left">
-                      <PlusCircle size={14} /> <span>Add New Goal</span>
-                    </div>
-                  </Link>
-                </li>
-              </ul>
-            )}
+            </NavLink>
           </li>
           <li>
             <button onClick={toggleCalendar}>
@@ -118,24 +83,40 @@ const SideBar = () => {
             {calendarOpen && (
               <ul>
                 <li>
-                  <Link to="/Calendar/Detailed">
+                  <NavLink to="/Calendar/Detailed">
                     <div className="items-left">
                       <LayoutDashboard size={14} /> <span>Detailed View</span>
                     </div>
-                  </Link>
+                  </NavLink>
                 </li>
                 <li>
-                  <Link to="/Calendar/Overview">
+                  <NavLink to="/Calendar/Overview">
                     <div className="items-left">
                       <PanelsTopLeft size={14} /> <span>Overview</span>
                     </div>
-                  </Link>
+                  </NavLink>
                 </li>
               </ul>
             )}
           </li>
         </ul>
       </nav>
+      <QuotesCard
+        icon={<Quote size={20} />}
+        quote="Stay consistent. Small daily actions lead to massive progress."
+      />
+      <div>
+        <button
+          style={{
+            display: "flex",
+            alignItems: "center",
+            gap: "8px",
+            justifyContent: "center",
+          }}
+        >
+          <LogOut size={14} /> <span>Log Out</span>
+        </button>
+      </div>
     </div>
   );
 };

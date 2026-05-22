@@ -45,8 +45,8 @@ const Today = () => {
   return (
     <>
       <div>
-        <h1> Today</h1>
-        <h2>{today}</h2>
+        <h2>Today</h2>
+        <p>{today}</p>
         <div className="outer-container">
           {todos.map((todo, index) => {
             return (
