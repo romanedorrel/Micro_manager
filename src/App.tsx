@@ -4,11 +4,10 @@ import { Routes, Route } from "react-router-dom";
 import Today from "./pages/Today";
 import CurrentGoals from "./pages/Goals/CurrentGoals";
 import CompletedGoals from "./pages/Goals/CompletedGoals";
-import { AddNew } from "./pages/Goals/AddNew";
-import Overview from "./pages/Calendar/Overview";
-import Detailed from "./pages/Calendar/Detailed";
 import Settings from "./pages/Profile/Settings";
 import AccountManagement from "./pages/Profile/AccountManagement";
+import CalendarPage from "./pages/Calendar/CalendarPage";
+import GoalPage from "./pages/Goals/GoalPage";
 
 function App() {
   return (
@@ -18,11 +17,13 @@ function App() {
         <main>
           <Routes>
             <Route path="/" element={<Today />} />
-            <Route path="/Goals/Current" element={<CurrentGoals />} />
-            <Route path="/Goals/Completed" element={<CompletedGoals />} />
-            <Route path="/Goals/AddNew" element={<AddNew />} />
-            <Route path="/Calendar/Detailed" element={<Detailed />} />
-            <Route path="/Calendar/Overview" element={<Overview />} />
+            <Route path="/goals" element={<GoalPage />}>
+              <Route index element={<CurrentGoals />} />
+              <Route path="current" element={<CurrentGoals />} />
+              <Route path="completed" element={<CompletedGoals />} />
+            </Route>
+
+            <Route path="/CalendarPage" element={<CalendarPage />} />
             <Route path="/Profile/Settings" element={<Settings />} />
             <Route
               path="/Profile/ManageAccount"

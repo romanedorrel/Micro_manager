@@ -4,27 +4,19 @@ import {
   CalendarDays,
   Calendar,
   Target,
-  // PlusCircle,
-  // CheckCircle,
   User,
   Settings,
   LogOut,
-  ChevronDown,
-  ChevronRight,
   Menu,
-  LayoutDashboard,
-  PanelsTopLeft,
   Quote,
 } from "lucide-react";
 import QuotesCard from "./QuotesCard";
 
 const SideBar = () => {
   // const [goalsOpen, setGoalsOpen] = useState(false);
-  const [calendarOpen, setCalendarOpen] = useState(false);
   const [profileOpen, setProfileOpen] = useState(false);
 
   // const toggleGoals = () => setGoalsOpen(!goalsOpen);
-  const toggleCalendar = () => setCalendarOpen(!calendarOpen);
   const toggleProfile = () => setProfileOpen(!profileOpen);
   return (
     <div className="sidebar">
@@ -68,36 +60,12 @@ const SideBar = () => {
             </NavLink>
           </li>
           <li>
-            <button onClick={toggleCalendar}>
+            <NavLink to="/CalendarPage">
               <div className="items-left">
                 <Calendar size={18} />
                 <span>Calendar</span>
               </div>
-
-              {calendarOpen ? (
-                <ChevronDown size={18} />
-              ) : (
-                <ChevronRight size={18} />
-              )}
-            </button>
-            {calendarOpen && (
-              <ul>
-                <li>
-                  <NavLink to="/Calendar/Detailed">
-                    <div className="items-left">
-                      <LayoutDashboard size={14} /> <span>Detailed View</span>
-                    </div>
-                  </NavLink>
-                </li>
-                <li>
-                  <NavLink to="/Calendar/Overview">
-                    <div className="items-left">
-                      <PanelsTopLeft size={14} /> <span>Overview</span>
-                    </div>
-                  </NavLink>
-                </li>
-              </ul>
-            )}
+            </NavLink>
           </li>
         </ul>
       </nav>

@@ -1,4 +1,3 @@
-import { NavLink } from "react-router-dom";
 import { GoalCard } from "../../components/GoalCard";
 import { Presentation } from "lucide-react";
 import NavTab from "../../components/NavTab";
@@ -24,7 +23,6 @@ const CurrentGoals = () => {
   return (
     <>
       <h2>Current Goals</h2>
-      <NavTab />
       <div className="outer-container">
         <GoalCard goal={sampleGoal} />
         <GoalCard goal={sampleGoal} />
