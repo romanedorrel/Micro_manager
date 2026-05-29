@@ -10,7 +10,6 @@ const CompletedGoals = () => {
   };
   return (
     <>
-      <h2>Completed Goals</h2>
       <div className="outer-container">
         <CompletedCard goal={goal} />
         <CompletedCard goal={goal} />

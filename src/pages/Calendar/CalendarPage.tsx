@@ -1,4 +1,4 @@
-import React from "react";
+import { useState } from "react";
 import CalendarHeader from "./Components/CalendarHeader";
 import WeekView from "./Components/WeekView";
 import Detailed from "./Components/Detailed";
@@ -16,6 +16,7 @@ type WeekDay = {
 };
 
 const CalendarPage = () => {
+  const [selectedDay, setSelectedDay] = useState<WeekDay | null>(null);
   const weekData: WeekDay[] = [
     {
       day: "Mon",
@@ -78,14 +79,12 @@ const CalendarPage = () => {
   ];
 
   return (
-    <main className="calendar-page">
-      <CalendarHeader />
-
-      <section className="calendar-layout">
-        <WeekView weekData={weekData} />
-
-        <Detailed />
+    <main className={`calendar-page ${selectedDay ? "has-detail" : ""}`}>
+      <section className="calendar-card">
+        <CalendarHeader />
+        <WeekView weekData={weekData} setSelectedDay={setSelectedDay} />
       </section>
+      {selectedDay && <Detailed selectedDay={selectedDay} />}
     </main>
   );
 };

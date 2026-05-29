@@ -7,9 +7,12 @@
   z-index: 1;
   top: 0;
   left: 0;
-  background-color: var(--bg-secondary);
+  background:
+    radial-gradient(circle at 30% 0%, rgba(124, 108, 242, 0.16), transparent 30%),
+    linear-gradient(180deg, #101827 0%, #07101d 100%);
   border-right: 1px solid var(--border-shell);
-  padding: 2px 12px;
+  padding: 28px 16px 24px;
+  box-shadow: 12px 0 32px rgba(0, 0, 0, 0.18);
 }
 .sidebar a,
 .sidebar button {
@@ -17,66 +20,145 @@
   align-items: center;
   justify-content: space-between;
   width: 100%;
-  padding: 10px 15px;
+  min-height: 44px;
+  padding: 11px 14px;
   text-decoration: none;
-  font-size: var(--font-size-md);
-  border-radius: var(--radius-primary);
+  font-size: var(--font-size-sm);
+  border-radius: 8px;
   transition:
     background-color var(--transition-fast),
-    border var(--transition-fast);
-  color: var(--text-on-dark);
+    color var(--transition-fast),
+    box-shadow var(--transition-fast),
+    transform var(--transition-fast);
+  color: var(--text-on-dark-secondary);
   font-family: inherit;
   background: none;
   border: none;
   text-align: left;
   cursor: pointer;
 }
+.sidebar h2 {
+  order: -1;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 0 0 30px;
+  color: var(--text-on-dark);
+  font-size: var(--font-size-md);
+  font-weight: 800;
+}
+.sidebar h2::before {
+  content: "";
+  display: inline-block;
+  width: 36px;
+  height: 36px;
+  border-radius: 12px;
+  background:
+    radial-gradient(circle at 50% 50%, #07101d 0 28%, transparent 30%),
+    linear-gradient(135deg, var(--accent-primary), var(--accent-primary-hover));
+  box-shadow: 0 10px 24px rgba(124, 108, 242, 0.34);
+  flex: 0 0 auto;
+}
+.sidebar nav {
+  margin-top: 8px;
+}
 .items-left {
   display: flex;
   align-items: center;
   gap: 12px;
+  min-width: 0;
+}
+.items-left svg {
+  flex: 0 0 auto;
+  color: currentColor;
 }
 .sidebar a:hover,
 .sidebar button:hover {
-  background-color: var(--bg-hover);
+  background-color: rgba(255, 255, 255, 0.06);
   color: var(--text-on-dark);
+  transform: translateX(2px);
 }
 .sidebar ul {
   list-style: none;
   padding: 0;
   margin: 0;
 }
-.sidebar ul ul {
+.sidebar nav ul {
   display: flex;
   flex-direction: column;
   gap: 8px;
-  padding-left: 20px;
+}
+.sidebar ul ul {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 8px;
   margin-top: 8px;
+  border-radius: 10px;
+  background-color: rgba(4, 10, 20, 0.54);
+  border: 1px solid rgba(255, 255, 255, 0.08);
 }
 .sidebar .active {
-  background-color: var(--accent-primary);
+  background: linear-gradient(135deg, var(--accent-primary), #5f48c9);
   color: var(--text-on-dark);
+  box-shadow: 0 12px 24px rgba(124, 108, 242, 0.28);
 }
 .profile-section {
-  border-bottom: 1px solid var(--border-shell);
-  padding: 6px;
+  order: 10;
+  margin-top: auto;
+  padding: 18px 0 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  border-bottom: 0;
 }
-.profile-section ul {
-  background-color: var(--bg-primary);
-  border: 1px solid var(--border-shell);
-  padding-left: 20px;
+.profile-section > button {
+  min-height: 52px;
+  padding: 8px;
+  color: var(--text-on-dark);
+}
+.profile-section > button .items-left {
+  gap: 10px;
+}
+.profile-section > button .items-left svg {
+  width: 34px;
+  height: 34px;
+  padding: 7px;
+  border-radius: var(--radius-secondary);
+  background: rgba(255, 255, 255, 0.2);
+  color: var(--text-on-dark);
+}
+.profile-section > button .items-left span {
+  font-weight: 700;
+}
+.profile-section ul a {
+  min-height: 38px;
+  padding: 8px 10px;
+  font-size: var(--font-size-xs);
 }
 .sidebar .quotes-card {
-  border-color: var(--border-shell);
-  box-shadow: none;
+  margin: auto 0 18px;
+  padding: 14px;
+  background: rgba(255, 255, 255, 0.045);
+  border-color: rgba(255, 255, 255, 0.08);
+  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.14);
 }
 .sidebar .quotes-card-text {
-  color: var(--text-on-dark-secondary);
+  color: rgba(244, 246, 250, 0.78);
+  line-height: 1.5;
 }
 .sidebar .quotes-card-icon {
   color: var(--accent-primary-hover);
 }
+.sidebar > div:last-child {
+  order: 11;
+  margin-top: 12px;
+}
+.sidebar > div:last-child button {
+  justify-content: center;
+  color: rgba(244, 246, 250, 0.72);
+  background: rgba(255, 255, 255, 0.04);
+}
 .app-content {
   margin-left: 250px;
   padding: 2rem;
+  overflow: scroll;
 }

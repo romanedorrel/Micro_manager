@@ -14,13 +14,14 @@ type WeekDay = {
 
 type WeekGridProps = {
   weekData: WeekDay[];
+  onSelectedDay: (day: WeekDay) => void;
 };
 
-const WeekGrid = ({ weekData }: WeekGridProps) => {
+const WeekGrid = ({ weekData, onSelectedDay }: WeekGridProps) => {
   return (
     <section className="week-grid">
       {weekData.map((day) => (
-        <DayColumn key={day.date} day={day} />
+        <DayColumn key={day.date} day={day} onSelectedDay={onSelectedDay} />
       ))}
     </section>
   );

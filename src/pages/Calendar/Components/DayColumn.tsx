@@ -14,15 +14,18 @@ type WeekDay = {
 
 type DayColumnProps = {
   day: WeekDay;
+  onSelectedDay: (day: WeekDay) => void;
 };
 
-const DayColumn = ({ day }: DayColumnProps) => {
+const DayColumn = ({ day, onSelectedDay }: DayColumnProps) => {
   return (
     <div className="day-column">
       <div className="day-column-header">
-        <span className="day-name">{day.day}</span>
-
-        <span className="day-date">{day.date}</span>
+        <button className="day-select-btn" onClick={() => onSelectedDay(day)}>
+          {" "}
+          <span className="day-name">{day.day}</span>
+          <span className="day-date">{day.date}</span>
+        </button>{" "}
       </div>
 
       <div className="day-column-tasks">

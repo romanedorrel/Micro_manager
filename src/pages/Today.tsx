@@ -45,6 +45,7 @@ const Today = () => {
   return (
     <>
       <div>
+        {" "}
         <h2>Today</h2>
         <p>{today}</p>
         <div className="outer-container">

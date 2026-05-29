@@ -14,9 +14,10 @@ type WeekDay = {
 
 type WeekViewProps = {
   weekData: WeekDay[];
+  setSelectedDay: (day: WeekDay) => void;
 };
 
-const WeekView = ({ weekData }: WeekViewProps) => {
+const WeekView = ({ weekData, setSelectedDay }: WeekViewProps) => {
   return (
     <section className="week-view">
       <div className="week-view-header">
@@ -28,7 +29,7 @@ const WeekView = ({ weekData }: WeekViewProps) => {
         <button className="today-btn">Today</button>
       </div>
 
-      <WeekGrid weekData={weekData} />
+      <WeekGrid weekData={weekData} onSelectedDay={setSelectedDay} />
     </section>
   );
 };

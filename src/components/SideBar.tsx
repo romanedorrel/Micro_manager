@@ -9,6 +9,7 @@ import {
   LogOut,
   Menu,
   Quote,
+  House,
 } from "lucide-react";
 import QuotesCard from "./QuotesCard";
 
@@ -43,17 +44,25 @@ const SideBar = () => {
           </ul>
         )}
       </div>
+      <h2>AI-Scheduler</h2>
       <nav>
         <ul>
           <li>
             <NavLink to="/">
+              <div className="items-left">
+                <House size={18} /> <span>DashBoard</span>
+              </div>
+            </NavLink>
+          </li>
+          <li>
+            <NavLink to="/today">
               <div className="items-left">
                 <CalendarDays size={18} /> <span>Today</span>
               </div>
             </NavLink>
           </li>
           <li>
-            <NavLink to="/goals/current">
+            <NavLink to="/goals">
               <div className="items-left">
                 <Target size={18} /> <span>Goals</span>
               </div>

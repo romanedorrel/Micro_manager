@@ -16,7 +16,7 @@ function App() {
       <div className="app-content">
         <main>
           <Routes>
-            <Route path="/" element={<Today />} />
+            <Route path="/today" element={<Today />} />
             <Route path="/goals" element={<GoalPage />}>
               <Route index element={<CurrentGoals />} />
               <Route path="current" element={<CurrentGoals />} />

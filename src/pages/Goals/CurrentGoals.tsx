@@ -22,7 +22,6 @@ const CurrentGoals = () => {
   };
   return (
     <>
-      <h2>Current Goals</h2>
       <div className="outer-container">
         <GoalCard goal={sampleGoal} />
         <GoalCard goal={sampleGoal} />
