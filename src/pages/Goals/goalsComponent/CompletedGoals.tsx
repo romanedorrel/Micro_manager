@@ -1,4 +1,4 @@
-import CompletedCard from "./goalsComponent/CompletedCard";
+import CompletedCard from "./CompletedCard";
 
 const CompletedGoals = () => {
   const goal = {

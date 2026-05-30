@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { Link, NavLink } from "react-router-dom";
 import {
-  CalendarDays,
   Calendar,
   Target,
   User,
@@ -10,6 +9,7 @@ import {
   Menu,
   Quote,
   House,
+  Sparkle,
 } from "lucide-react";
 import QuotesCard from "./QuotesCard";
 
@@ -48,16 +48,9 @@ const SideBar = () => {
       <nav>
         <ul>
           <li>
-            <NavLink to="/">
-              <div className="items-left">
-                <House size={18} /> <span>DashBoard</span>
-              </div>
-            </NavLink>
-          </li>
-          <li>
             <NavLink to="/today">
               <div className="items-left">
-                <CalendarDays size={18} /> <span>Today</span>
+                <House size={18} /> <span>Today</span>
               </div>
             </NavLink>
           </li>
@@ -76,6 +69,21 @@ const SideBar = () => {
               </div>
             </NavLink>
           </li>
+          <li>
+            <NavLink to="/scheduler">
+              <div className="items-left">
+                <Sparkle size={18} />
+                <span>AI Scheduler</span>
+              </div>
+            </NavLink>
+          </li>
+          {/* <li>
+            <NavLink to="/">
+              <div className="items-left">
+                <House size={18} /> <span>DashBoard</span>
+              </div>
+            </NavLink>
+          </li> */}
         </ul>
       </nav>
       <QuotesCard

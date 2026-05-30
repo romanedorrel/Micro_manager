@@ -1,5 +1,5 @@
 import React from "react";
-import ProgressCircle from "./ProgressCircle";
+import ProgressCircle from "../../../components/ProgressCircle";
 type Goal = {
   id: string;
   title: string;

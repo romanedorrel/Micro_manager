@@ -8,6 +8,7 @@ import Settings from "./pages/Profile/Settings";
 import AccountManagement from "./pages/Profile/AccountManagement";
 import CalendarPage from "./pages/Calendar/CalendarPage";
 import GoalPage from "./pages/Goals/GoalPage";
+import AIScheduler from "./pages/AIScheduler/AIScheduler";
 
 function App() {
   return (
@@ -22,8 +23,8 @@ function App() {
               <Route path="current" element={<CurrentGoals />} />
               <Route path="completed" element={<CompletedGoals />} />
             </Route>
-
             <Route path="/CalendarPage" element={<CalendarPage />} />
+            <Route path="/scheduler" element={<AIScheduler />} />
             <Route path="/Profile/Settings" element={<Settings />} />
             <Route
               path="/Profile/ManageAccount"

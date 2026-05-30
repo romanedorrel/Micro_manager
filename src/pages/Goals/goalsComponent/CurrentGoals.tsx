@@ -1,9 +1,23 @@
-import { GoalCard } from "./goalsComponent/GoalCard";
+import { GoalCard } from "./GoalCard";
 import { Presentation } from "lucide-react";
-import NavTab from "../../components/NavTab";
+
+type GoalStatus = "On Track" | "At Risk" | "Off Track"; // Status of the goal
+type GoalType = {
+  id: string;
+  title: string;
+  description: string;
+  dueDate: Date;
+  progress: number;
+  completedTasks: number;
+  totalTasks: number;
+  status: GoalStatus;
+  estimatedHours: number;
+  icon: React.ReactNode;
+  onClick: () => void;
+};
 
 const CurrentGoals = () => {
-  const sampleGoal = {
+  const sampleGoal: GoalType = {
     id: "1",
     title: "Launch New Marketing Campaign",
     description:

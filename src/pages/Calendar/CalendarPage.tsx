@@ -1,7 +1,7 @@
 import { useState } from "react";
-import CalendarHeader from "./Components/CalendarHeader";
-import WeekView from "./Components/WeekView";
-import Detailed from "./Components/Detailed";
+import CalendarHeader from "./calendarComponents/CalendarHeader";
+import WeekView from "./calendarComponents/WeekView";
+import Detailed from "./calendarComponents/Detailed";
 
 type Task = {
   title: string;
