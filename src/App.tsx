@@ -9,6 +9,8 @@ import AccountManagement from "./pages/Profile/AccountManagement";
 import CalendarPage from "./pages/Calendar/CalendarPage";
 import GoalPage from "./pages/Goals/GoalPage";
 import AIScheduler from "./pages/AIScheduler/AIScheduler";
+import SignUp from "./pages/Auth/SignUp";
+import Login from "./pages/Auth/Login";
 
 function App() {
   return (
@@ -30,6 +32,8 @@ function App() {
               path="/Profile/ManageAccount"
               element={<AccountManagement />}
             />
+            <Route path="/signup" element={<SignUp />} />
+            <Route path="/login" element={<Login />} />
           </Routes>
         </main>
       </div>
