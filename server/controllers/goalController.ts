@@ -1,19 +1,28 @@
 import * as goalService from "../services/goalService";
-import { Request, Response } from "express";
+import { Response } from "express";
+import { AuthRequest } from "../types/authRequest";
+import { IdParams } from "../types/requestTypes";
 
-export const getGoals = async (req: Request, res: Response) => {
+export const getGoals = async (req: AuthRequest, res: Response) => {
   try {
-    const goals = await goalService.getGoals();
+    const userId = req.user.id;
+    const goals = await goalService.getGoals(userId);
     res.status(200).json(goals);
   } catch (error) {
     return res.status(500).json({ message: error });
   }
 };
 
-export const getGoal = async (req: Request, res: Response) => {
+export const getGoal = async (req: AuthRequest<IdParams>, res: Response) => {
   try {
-    const { id } = req.params;
-    const goal = await goalService.getGoal(id);
+    const userId = req.user.id;
+    const id = req.params.id;
+
+    if (!id) {
+      return res.status(400).json({ message: "Goal ID is required" });
+    }
+    const goal = await goalService.getGoal(id, userId);
+
     if (!goal) {
       return res.status(404).json({ message: "Goal not found" });
     }
@@ -23,20 +32,21 @@ export const getGoal = async (req: Request, res: Response) => {
   }
 };
 
-export const createGoal = async (req: Request, res: Response) => {
+export const createGoal = async (req: AuthRequest, res: Response) => {
   try {
-    const goal = await goalService.createGoal(req.body);
+    const userId = req.user.id;
+    const goal = await goalService.createGoal(req.body, userId);
     res.status(201).json(goal);
   } catch (error) {
     return res.status(400).json({ message: error });
   }
 };
 
-export const updateGoal = async (req: Request, res: Response) => {
+export const updateGoal = async (req: AuthRequest<IdParams>, res: Response) => {
   try {
+    const userId = req.user.id;
     const { id } = req.params;
-
-    const goal = await goalService.updateGoal(id, req.body);
+    const goal = await goalService.updateGoal(id, req.body, userId);
     if (!goal) {
       return res.status(404).json({ message: "No Goal Found" });
     }
@@ -46,10 +56,11 @@ export const updateGoal = async (req: Request, res: Response) => {
   }
 };
 
-export const deleteGoal = async (req: Request, res: Response) => {
+export const deleteGoal = async (req: AuthRequest<IdParams>, res: Response) => {
   try {
+    const userId = req.user.id;
     const { id } = req.params;
-    const deletedGoal = await goalService.deleteGoal(id);
+    const deletedGoal = await goalService.deleteGoal(id, userId);
     if (!deletedGoal) {
       return res.status(404).json({ message: "Goal not found" });
     }

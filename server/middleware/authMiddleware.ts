@@ -1,5 +1,6 @@
 import { Request, Response, NextFunction } from "express";
 import { supabase } from "../lib/supabaseServer";
+import { AuthRequest } from "../types/authRequest";
 
 export const authMiddleware = async (
   req: Request,
@@ -21,10 +22,11 @@ export const authMiddleware = async (
     if (error || !user) {
       return res.status(401).json({ message: "Invalid or expired token" });
     }
-    req.user = user;
+    (req as AuthRequest).user = user;
 
     next();
   } catch (e) {
+    console.error(e);
     return res.status(500).json({ message: "Authentication failed" });
   }
 };
