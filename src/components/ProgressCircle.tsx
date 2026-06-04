@@ -1,5 +1,3 @@
-import React from "react";
-
 type ProgressCircleProps = {
   progress: number; // Progress percentage (0-100)
 };
