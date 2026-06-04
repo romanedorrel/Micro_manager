@@ -1,7 +1,7 @@
-import type { GoalInput, GoalUpdate } from "../types/goalTypes";
-const API_URL = "http://localhost:3000/api/goals";
+import type { TaskInput, TaskUpdate } from "../types/taskTypes";
+const API_URL = "http://localhost:3000/api/tasks";
 
-export const getGoals = async (token: string) => {
+export const getTasks = async (token: string) => {
   const response = await fetch(API_URL, {
     method: "GET",
     headers: { Authorization: `Bearer ${token}` },
@@ -10,44 +10,58 @@ export const getGoals = async (token: string) => {
   const data = await response.json();
 
   if (!response.ok) {
-    throw new Error(data.message || "Error fetching goals");
+    throw new Error(data.message || "Error fetching tasks");
   }
   return data;
 };
 
-export const getGoalById = async (id: string, token: string) => {
+export const getTask = async (id: string, token: string) => {
   const response = await fetch(`${API_URL}/${id}`, {
+    method: "GET",
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+  const data = await response.json();
+  if (!response.ok) {
+    throw new Error(data.message || "Error fetching tasks");
+  }
+  return data;
+};
+
+export const getTasksByGoalId = async (goalId: string, token: string) => {
+  const response = await fetch(`${API_URL}/goal/${goalId}`, {
     method: "GET",
     headers: { Authorization: `Bearer ${token}` },
   });
   const data = await response.json();
 
   if (!response.ok) {
-    throw new Error(data.message || "Error fetching goal");
+    throw new Error(data.message || "Error fetching task");
   }
   return data;
 };
 
-export const createGoal = async (goalData: GoalInput, token: string) => {
+export const createTask = async (taskData: TaskInput, token: string) => {
   const response = await fetch(API_URL, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
       Authorization: `Bearer ${token}`,
     },
-    body: JSON.stringify(goalData),
+    body: JSON.stringify(taskData),
   });
   const data = await response.json();
 
   if (!response.ok) {
-    throw new Error(data.message || "Error creating goal");
+    throw new Error(data.message || "Error creating task");
   }
   return data;
 };
 
-export const updateGoal = async (
+export const updateTask = async (
   id: string,
-  goalData: GoalUpdate,
+  taskData: TaskUpdate,
   token: string,
 ) => {
   const response = await fetch(`${API_URL}/${id}`, {
@@ -56,17 +70,17 @@ export const updateGoal = async (
       "Content-Type": "application/json",
       Authorization: `Bearer ${token}`,
     },
-    body: JSON.stringify(goalData),
+    body: JSON.stringify(taskData),
   });
 
   const data = await response.json();
   if (!response.ok) {
-    throw new Error(data.message || "Failed to update goal");
+    throw new Error(data.message || "Failed to update task");
   }
   return data;
 };
 
-export const deleteGoal = async (id: string, token: string) => {
+export const deleteTask = async (id: string, token: string) => {
   const response = await fetch(`${API_URL}/${id}`, {
     method: "DELETE",
     headers: { Authorization: `Bearer ${token}` },
@@ -74,7 +88,7 @@ export const deleteGoal = async (id: string, token: string) => {
 
   const data = await response.json();
   if (!response.ok) {
-    throw new Error(data.message || "Failed to delete goal");
+    throw new Error(data.message || "Failed to delete task");
   }
   return data;
 };

@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Link, NavLink } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
 import {
   Calendar,
   Target,
@@ -14,11 +15,11 @@ import {
 import QuotesCard from "./QuotesCard";
 
 const SideBar = () => {
-  // const [goalsOpen, setGoalsOpen] = useState(false);
   const [profileOpen, setProfileOpen] = useState(false);
 
-  // const toggleGoals = () => setGoalsOpen(!goalsOpen);
   const toggleProfile = () => setProfileOpen(!profileOpen);
+
+  const { logout } = useAuth();
   return (
     <div className="sidebar">
       <div className="profile-section">
@@ -32,12 +33,12 @@ const SideBar = () => {
         {profileOpen && (
           <ul>
             <li>
-              <Link to="/Profile/Settings">
+              <Link to="/settings">
                 <Settings size={14} /> <span>Settings</span>
               </Link>
             </li>
             <li>
-              <Link to="/Profile/ManageAccount">
+              <Link to="/manageAccount">
                 <User size={14} /> <span>Manage Account</span>
               </Link>
             </li>
@@ -62,7 +63,7 @@ const SideBar = () => {
             </NavLink>
           </li>
           <li>
-            <NavLink to="/CalendarPage">
+            <NavLink to="/calendarpage">
               <div className="items-left">
                 <Calendar size={18} />
                 <span>Calendar</span>
@@ -98,6 +99,7 @@ const SideBar = () => {
             gap: "8px",
             justifyContent: "center",
           }}
+          onClick={logout}
         >
           <LogOut size={14} /> <span>Log Out</span>
         </button>

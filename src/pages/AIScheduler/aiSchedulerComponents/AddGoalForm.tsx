@@ -1,17 +1,85 @@
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "../../../context/AuthContext";
+import { createGoal } from "../../../services/goalApi";
+import type { GoalInput } from "../../../types/goalTypes";
+
 const AddGoalForm = () => {
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
+  const [deadline, setDeadline] = useState("");
+  const [priority, setPriority] = useState<GoalInput["priority"]>("high");
+  const [effort, setEffort] = useState<GoalInput["effort"]>("high");
+  const [availableDays, setAvailableDays] = useState<string[]>([]);
+  const [notes, setNotes] = useState("");
+  const [error, setError] = useState("");
+  const [isSaving, setIsSaving] = useState(false);
+
+  const { accessToken } = useAuth();
+  const navigate = useNavigate();
+
+  const toggleDay = (day: string) => {
+    setAvailableDays((days) =>
+      days.includes(day)
+        ? days.filter((currentDay) => currentDay !== day)
+        : [...days, day],
+    );
+  };
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    if (!accessToken || !title.trim()) return;
+
+    setError("");
+    setIsSaving(true);
+
+    try {
+      const goal = await createGoal(
+        {
+          title,
+          description,
+          deadline: deadline || undefined,
+          priority,
+          effort,
+          available_days: availableDays,
+          notes,
+          status: "current",
+        },
+        accessToken,
+      );
+
+      navigate(`/goals/${goal.id}`);
+    } catch (error) {
+      console.error("Failed to create goal", error);
+      setError("Could not create goal. Please try again.");
+    } finally {
+      setIsSaving(false);
+    }
+  };
+
   return (
-    <form className="add-goal-form">
+    <form className="add-goal-form" onSubmit={handleSubmit}>
       <section className="form-card">
         <h2>Goal Details</h2>
 
         <label>
           Goal Name
-          <input type="text" placeholder="Become a Junior Software Engineer" />
+          <input
+            type="text"
+            placeholder="Become a Junior Software Engineer"
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
+          />
         </label>
 
         <label>
           Goal Description
-          <textarea placeholder="Describe what you want to accomplish..." />
+          <textarea
+            placeholder="Describe what you want to accomplish..."
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
+          />
         </label>
 
         <div className="form-row">
@@ -28,7 +96,11 @@ const AddGoalForm = () => {
 
           <label>
             Target Deadline
-            <input type="date" />
+            <input
+              type="date"
+              value={deadline}
+              onChange={(e) => setDeadline(e.target.value)}
+            />
           </label>
         </div>
 
@@ -36,13 +108,25 @@ const AddGoalForm = () => {
           <p>Priority</p>
 
           <div className="option-row">
-            <button type="button" className="option-btn">
+            <button
+              type="button"
+              className={`option-btn ${priority === "low" ? "active" : ""}`}
+              onClick={() => setPriority("low")}
+            >
               Low
             </button>
-            <button type="button" className="option-btn">
+            <button
+              type="button"
+              className={`option-btn ${priority === "medium" ? "active" : ""}`}
+              onClick={() => setPriority("medium")}
+            >
               Medium
             </button>
-            <button type="button" className="option-btn active">
+            <button
+              type="button"
+              className={`option-btn ${priority === "high" ? "active" : ""}`}
+              onClick={() => setPriority("high")}
+            >
               High
             </button>
           </div>
@@ -52,13 +136,25 @@ const AddGoalForm = () => {
           <p>Estimated Effort</p>
 
           <div className="option-row">
-            <button type="button" className="option-btn">
+            <button
+              type="button"
+              className={`option-btn ${effort === "low" ? "active" : ""}`}
+              onClick={() => setEffort("low")}
+            >
               Small
             </button>
-            <button type="button" className="option-btn">
+            <button
+              type="button"
+              className={`option-btn ${effort === "medium" ? "active" : ""}`}
+              onClick={() => setEffort("medium")}
+            >
               Medium
             </button>
-            <button type="button" className="option-btn active">
+            <button
+              type="button"
+              className={`option-btn ${effort === "high" ? "active" : ""}`}
+              onClick={() => setEffort("high")}
+            >
               Large
             </button>
           </div>
@@ -69,7 +165,14 @@ const AddGoalForm = () => {
 
           <div className="option-row wrap">
             {["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"].map((day) => (
-              <button type="button" className="option-btn" key={day}>
+              <button
+                type="button"
+                className={`option-btn ${
+                  availableDays.includes(day) ? "active" : ""
+                }`}
+                key={day}
+                onClick={() => toggleDay(day)}
+              >
                 {day}
               </button>
             ))}
@@ -78,15 +181,25 @@ const AddGoalForm = () => {
 
         <label>
           Additional Notes
-          <textarea placeholder="Anything else the AI should know?" />
+          <textarea
+            placeholder="Anything else the AI should know?"
+            value={notes}
+            onChange={(e) => setNotes(e.target.value)}
+          />
         </label>
+
+        {error && <p>{error}</p>}
 
         <div className="form-actions">
           <button type="button" className="secondary-btn">
             Cancel
           </button>
-          <button type="submit" className="primary-btn">
-            Generate Plan
+          <button
+            type="submit"
+            className="primary-btn"
+            disabled={isSaving || !title.trim()}
+          >
+            {isSaving ? "Generating..." : "Generate Plan"}
           </button>
         </div>
       </section>

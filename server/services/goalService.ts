@@ -1,19 +1,8 @@
-import { supabase } from "../lib/supabaseServer";
+import { createAuthedSupabaseClient } from "../lib/supabaseServer";
+import type { GoalInput, GoalUpdate } from "../types/goalTypes";
 
-export type GoalInput = {
-  title: string;
-  description?: string;
-  deadline?: string;
-  priority?: string;
-  effort?: string;
-  available_days?: string[];
-  notes?: string;
-  status?: string;
-};
-
-export type GoalUpdate = Partial<GoalInput>;
-
-export const getGoals = async (userID: string) => {
+export const getGoals = async (userID: string, accessToken: string) => {
+  const supabase = createAuthedSupabaseClient(accessToken);
   const { data, error } = await supabase
     .from("goals")
     .select("*")
@@ -25,20 +14,26 @@ export const getGoals = async (userID: string) => {
   return data;
 };
 
-export const getGoal = async (id: string, userId: string) => {
+export const getGoal = async (id: string, userId: string, accessToken: string) => {
+  const supabase = createAuthedSupabaseClient(accessToken);
   const { data, error } = await supabase
     .from("goals")
     .select("*")
     .eq("user_id", userId)
     .eq("id", id)
-    .single();
+    .maybeSingle();
   if (error) {
     throw error;
   }
   return data;
 };
 
-export const createGoal = async (goalData: GoalInput, userId: string) => {
+export const createGoal = async (
+  goalData: GoalInput,
+  userId: string,
+  accessToken: string,
+) => {
+  const supabase = createAuthedSupabaseClient(accessToken);
   const { data, error } = await supabase
     .from("goals")
     .insert([{ ...goalData, user_id: userId }])
@@ -55,7 +50,9 @@ export const updateGoal = async (
   id: string,
   updates: GoalUpdate,
   userId: string,
+  accessToken: string,
 ) => {
+  const supabase = createAuthedSupabaseClient(accessToken);
   const { data, error } = await supabase
     .from("goals")
     .update(updates)
@@ -70,7 +67,12 @@ export const updateGoal = async (
   return data;
 };
 
-export const deleteGoal = async (id: string, userId: string) => {
+export const deleteGoal = async (
+  id: string,
+  userId: string,
+  accessToken: string,
+) => {
+  const supabase = createAuthedSupabaseClient(accessToken);
   const { data, error } = await supabase
     .from("goals")
     .delete()

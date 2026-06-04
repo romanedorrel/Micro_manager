@@ -1,16 +1,8 @@
-import { supabase } from "../lib/supabaseServer";
-export type TaskInput = {
-  goal_id: string;
-  title: string;
-  description?: string;
-  status?: string;
-  priority?: string;
-  due_date?: string;
-};
+import { createAuthedSupabaseClient } from "../lib/supabaseServer";
+import type { TaskInput, TaskUpdate } from "../types/taskTypes";
 
-export type TaskUpdate = Partial<Omit<TaskInput, "goal_id">>;
-
-export const getTasks = async (userId: string) => {
+export const getTasks = async (userId: string, accessToken: string) => {
+  const supabase = createAuthedSupabaseClient(accessToken);
   const { data, error } = await supabase
     .from("tasks")
     .select("*")
@@ -22,20 +14,26 @@ export const getTasks = async (userId: string) => {
   return data;
 };
 
-export const getTask = async (id: string, userId: string) => {
+export const getTask = async (id: string, userId: string, accessToken: string) => {
+  const supabase = createAuthedSupabaseClient(accessToken);
   const { data, error } = await supabase
     .from("tasks")
     .select("*")
     .eq("user_id", userId)
     .eq("id", id)
-    .single();
+    .maybeSingle();
 
   if (error) {
     throw error;
   }
   return data;
 };
-export const getTasksByGoal = async (goalId: string, userId: string) => {
+export const getTasksByGoal = async (
+  goalId: string,
+  userId: string,
+  accessToken: string,
+) => {
+  const supabase = createAuthedSupabaseClient(accessToken);
   const { data, error } = await supabase
     .from("tasks")
     .select("*")
@@ -48,7 +46,12 @@ export const getTasksByGoal = async (goalId: string, userId: string) => {
   return data;
 };
 
-export const createTask = async (taskData: TaskInput, userId: string) => {
+export const createTask = async (
+  taskData: TaskInput,
+  userId: string,
+  accessToken: string,
+) => {
+  const supabase = createAuthedSupabaseClient(accessToken);
   const { data, error } = await supabase
     .from("tasks")
     .insert([{ ...taskData, user_id: userId }])
@@ -63,7 +66,9 @@ export const updateTask = async (
   id: string,
   updates: TaskUpdate,
   userId: string,
+  accessToken: string,
 ) => {
+  const supabase = createAuthedSupabaseClient(accessToken);
   const { data, error } = await supabase
     .from("tasks")
     .update(updates)
@@ -78,7 +83,12 @@ export const updateTask = async (
   return data;
 };
 
-export const deleteTask = async (id: string, userId: string) => {
+export const deleteTask = async (
+  id: string,
+  userId: string,
+  accessToken: string,
+) => {
+  const supabase = createAuthedSupabaseClient(accessToken);
   const { data, error } = await supabase
     .from("tasks")
     .delete()
