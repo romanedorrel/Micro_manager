@@ -1,16 +1,24 @@
 import { useState } from "react";
 import { signUp } from "../../services/authApi";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+
 const SignUp = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [userMessage, setUserMessage] = useState("");
+  const navigate = useNavigate();
+
   const handleSignUp = async (e: React.SubmitEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setUserMessage("");
     try {
       const data = await signUp({ email, password });
       console.log("Account created:", data);
-    } catch (error) {
-      console.error("Sign up error:", error);
+      setUserMessage("Account created");
+
+      navigate("/login");
+    } catch {
+      setUserMessage("Sign up Failed");
     }
   };
 
@@ -49,6 +57,7 @@ const SignUp = () => {
           Already have an account? <Link to="/login"> Log In</Link>
         </p>
       </section>
+      {userMessage && <p className="auth-message">{userMessage}</p>}
     </div>
   );
 };

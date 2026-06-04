@@ -1,20 +1,26 @@
 import { useState } from "react";
 import { logIn } from "../../services/authApi";
 import { useAuth } from "../../context/AuthContext";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [userMessage, setUserMessage] = useState("");
+  const navigate = useNavigate();
   const { setAccessToken } = useAuth();
 
   const handleLogIn = async (e: React.SubmitEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setUserMessage("");
     try {
       const data = await logIn({ email, password });
       setAccessToken(data.access_token);
-      console.log("Successful LogIn", data);
-    } catch (error) {
-      console.error("Login failed", error);
+      setUserMessage("Successful LogIn");
+
+      navigate("/Today");
+    } catch {
+      setUserMessage("Username or Password Incorrect");
     }
   };
   return (
@@ -51,6 +57,7 @@ const Login = () => {
         <p className="auth-switch">
           Dont have an account? <Link to="/signup">Create one</Link>
         </p>
+        {userMessage && <p className="auth-message">{userMessage}</p>}
       </section>
     </div>
   );
