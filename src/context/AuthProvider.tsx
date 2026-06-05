@@ -1,6 +1,6 @@
-import { useState, useEffect, type ReactNode } from "react";
+import { useState, type ReactNode } from "react";
 import { AuthContext } from "./AuthContext";
-import { refreshSession } from "../services/authApi";
+// import { refreshSession } from "../services/authApi";
 import { logOut } from "../services/authApi";
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
@@ -12,19 +12,19 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     setAccessToken(null);
   };
 
-  useEffect(() => {
-    const restoreSession = async () => {
-      try {
-        const data = await refreshSession();
-        setAccessToken(data.access_token);
-      } catch {
-        setAccessToken(null);
-      } finally {
-        setAuthLoading(false);
-      }
-    };
-    restoreSession();
-  }, []);
+  // useEffect(() => {
+  //   const restoreSession = async () => {
+  //     try {
+  //       const data = await refreshSession();
+  //       setAccessToken(data.access_token);
+  //     } catch {
+  //       setAccessToken(null);
+  //     } finally {
+  //       setAuthLoading(false);
+  //     }
+  //   };
+  //   restoreSession();
+  // }, []);
 
   const isAuthenticated = !!accessToken;
 
@@ -35,6 +35,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         setAccessToken,
         isAuthenticated,
         authLoading,
+        setAuthLoading,
         logout,
       }}
     >
