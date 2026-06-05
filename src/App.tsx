@@ -13,6 +13,7 @@ import SignUp from "./pages/Auth/SignUp";
 import Login from "./pages/Auth/Login";
 import ProtectedRoute from "./components/ProtectedRoute";
 import GoalIdPage from "./pages/Goals/GoalIdPage";
+import { AuthProvider } from "./context/AuthProvider";
 
 function App() {
   return (
@@ -24,15 +25,17 @@ function App() {
             <Route path="/" element={<Navigate to="/today" replace />} />
             <Route path="/signup" element={<SignUp />} />
             <Route path="/login" element={<Login />} />
-            <Route element={<ProtectedRoute />}>
-              <Route path="/today" element={<Today />} />
-              <Route path="/calendarpage" element={<CalendarPage />} />
-              <Route path="/scheduler" element={<AIScheduler />} />
-              <Route path="/goals" element={<GoalPage />} />
-              <Route path="/goals/:goalId" element={<GoalIdPage />} />
-              <Route path="settings" element={<Settings />} />
-              <Route path="manageAccount" element={<AccountManagement />} />
-            </Route>
+            <AuthProvider>
+              <Route element={<ProtectedRoute />}>
+                <Route path="/today" element={<Today />} />
+                <Route path="/calendarpage" element={<CalendarPage />} />
+                <Route path="/scheduler" element={<AIScheduler />} />
+                <Route path="/goals" element={<GoalPage />} />
+                <Route path="/goals/:goalId" element={<GoalIdPage />} />
+                <Route path="settings" element={<Settings />} />
+                <Route path="manageAccount" element={<AccountManagement />} />
+              </Route>
+            </AuthProvider>
           </Routes>
         </main>
       </div>
