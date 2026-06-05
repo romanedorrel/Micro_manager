@@ -5,7 +5,6 @@ type AuthContextType = {
   setAccessToken: (token: string | null) => void;
   isAuthenticated: boolean;
   authLoading: boolean;
-  setAuthLoading: (state: boolean) => void;
   logout: () => Promise<void>;
 };
 
