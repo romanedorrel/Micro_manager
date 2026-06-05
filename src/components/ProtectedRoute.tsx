@@ -1,8 +1,7 @@
 import { Navigate, Outlet } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
-import { AuthProvider } from "../context/AuthProvider";
 
-const AuthRoute = () => {
+const ProtectedRoute = () => {
   const { isAuthenticated, authLoading } = useAuth();
 
   if (authLoading) {
@@ -14,14 +13,6 @@ const AuthRoute = () => {
   }
 
   return <Outlet />;
-};
-
-const ProtectedRoute = () => {
-  return (
-    <AuthProvider>
-      <AuthRoute />
-    </AuthProvider>
-  );
 };
 
 export default ProtectedRoute;
