@@ -6,7 +6,7 @@ type AuthData = {
 };
 
 export const signUp = async ({ email, password }: AuthData) => {
-  const response = await fetch(`${API_URL}auth/signUp`, {
+  const response = await fetch(`${API_URL}/auth/signUp`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -22,7 +22,7 @@ export const signUp = async ({ email, password }: AuthData) => {
 };
 
 export const logIn = async ({ email, password }: AuthData) => {
-  const response = await fetch(`${API_URL}auth/logIn`, {
+  const response = await fetch(`${API_URL}/auth/logIn`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -38,7 +38,7 @@ export const logIn = async ({ email, password }: AuthData) => {
 };
 
 export const refreshSession = async () => {
-  const response = await fetch(`${API_URL}auth/refresh`, {
+  const response = await fetch(`${API_URL}/auth/refresh`, {
     method: "POST",
     credentials: "include",
   });
@@ -53,7 +53,7 @@ export const refreshSession = async () => {
 };
 
 export const logOut = async () => {
-  const response = await fetch(`${API_URL}auth/logout`, {
+  const response = await fetch(`${API_URL}/auth/logout`, {
     method: "POST",
     credentials: "include",
   });
