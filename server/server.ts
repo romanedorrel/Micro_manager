@@ -12,9 +12,7 @@ const app = express();
 const PORT = 3000;
 
 app.use(cookieParser());
-app.use(
-  cors({ origin: "https://micro-manager.onrender.com", credentials: true }),
-);
+app.use(cors({ origin: "truenorth-seven.vercel.app", credentials: true }));
 app.use(express.json());
 app.use("/api/auth", authRoutes);
 app.use("/api/goals", authMiddleware, goalRoutes);
