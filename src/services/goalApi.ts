@@ -1,5 +1,5 @@
 import type { GoalInput, GoalUpdate } from "../types/goalTypes";
-const API_URL = "https://micro-manager.onrender.com/goals";
+const API_URL = import.meta.env.VITE_API_URL + "/goals";
 
 export const getGoals = async (token: string) => {
   const response = await fetch(API_URL, {

@@ -1,5 +1,5 @@
 import type { TaskInput, TaskUpdate } from "../types/taskTypes";
-const API_URL = "https://micro-manager.onrender.com/tasks";
+const API_URL = import.meta.env.VITE_API_URL + "/tasks";
 
 export const getTasks = async (token: string) => {
   const response = await fetch(API_URL, {
