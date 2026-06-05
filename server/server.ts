@@ -12,7 +12,9 @@ const app = express();
 const PORT = 3000;
 
 app.use(cookieParser());
-app.use(cors({ origin: "http://localhost:5173", credentials: true }));
+app.use(
+  cors({ origin: "https://micro-manager.onrender.com", credentials: true }),
+);
 app.use(express.json());
 app.use("/api/auth", authRoutes);
 app.use("/api/goals", authMiddleware, goalRoutes);
