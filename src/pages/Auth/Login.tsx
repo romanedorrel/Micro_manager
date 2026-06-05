@@ -18,7 +18,7 @@ const Login = () => {
       setAccessToken(data.access_token);
       setUserMessage("Successful LogIn");
 
-      navigate("/Today");
+      navigate("/today");
     } catch {
       setUserMessage("Username or Password Incorrect");
     }

@@ -21,8 +21,8 @@ export const logInUser = async (req: Request, res: Response) => {
 
     res.cookie("refresh_token", data.session.refresh_token, {
       httpOnly: true,
-      secure: false,
-      sameSite: "lax",
+      secure: true,
+      sameSite: "none",
       path: "/api/auth/refresh",
     });
     return res
@@ -51,8 +51,8 @@ export const refreshSession = async (req: Request, res: Response) => {
 
     res.cookie("refresh_token", data.session.refresh_token, {
       httpOnly: true,
-      secure: false,
-      sameSite: "lax",
+      secure: true,
+      sameSite: "none",
       path: "/api/auth/refresh",
     });
 
@@ -68,8 +68,8 @@ export const refreshSession = async (req: Request, res: Response) => {
 export const logOutUser = async (req: Request, res: Response) => {
   res.clearCookie("refresh_token", {
     httpOnly: true,
-    secure: false,
-    sameSite: "lax",
+    secure: true,
+    sameSite: "none",
     path: "/api/auth/refresh",
   });
 

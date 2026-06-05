@@ -10,10 +10,18 @@ import { authMiddleware } from "./middleware/authMiddleware";
 
 const app = express();
 const PORT = 3000;
+const allowedOrigins = [
+  "http://localhost:5173",
+  "http://127.0.0.1:5173",
+  "https://truenorth-seven.vercel.app",
+];
 
 app.use(cookieParser());
 app.use(
-  cors({ origin: "https://truenorth-seven.vercel.app", credentials: true }),
+  cors({
+    origin: allowedOrigins,
+    credentials: true,
+  }),
 );
 app.use(express.json());
 app.use("/api/auth", authRoutes);
