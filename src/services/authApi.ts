@@ -1,4 +1,4 @@
-const API_URL = "https://micro-manager.onrender.com";
+const API_URL = "https://micro-manager.onrender.com/api/auth";
 
 type AuthData = {
   email: string;
