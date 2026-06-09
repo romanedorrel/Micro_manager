@@ -1,17 +1,15 @@
 import { useState, useEffect } from "react";
 import TodoCard from "../components/TodoCard";
 import { Plus } from "lucide-react";
+import { getTasks } from "../services/tasksApi";
+import type { Task } from "../types/taskTypes";
+import { useAuth } from "../context/AuthContext";
 
-type TodosType = {
-  todo: string;
-  completed: boolean;
-};
 const Today = () => {
-  const [todos, setTodos] = useState<TodosType[]>(
-    JSON.parse(localStorage.getItem("todos") || "[]"),
-  );
+  const [tasks, setTasks] = useState<Task[]>([]);
   const [value, setValue] = useState("");
   const [inputVisible, setInputVisible] = useState(false);
+  const { accessToken } = useAuth();
 
   const today = new Date().toLocaleDateString("en-US", {
     weekday: "long",
@@ -22,7 +20,15 @@ const Today = () => {
 
   const handleSubmit = () => {
     if (value.trim() === "") return;
-    setTodos([...todos, { todo: value, completed: false }]);
+
+    const newTask: Task = {
+      id: Date.now().toString(),
+      title: value,
+      description: "",
+      status: "pending",
+      goal_id: "",
+    };
+    setTasks([...tasks, newTask]);
     setInputVisible(false);
     setValue("");
   };
@@ -33,14 +39,28 @@ const Today = () => {
   // };
 
   const handleCheck = (target: number) => {
-    const updated = todos.map((todo, index) =>
-      index == target ? { ...todo, completed: !todo.completed } : todo,
+    const updated = tasks.map((task, index) =>
+      index == target
+        ? {
+            ...task,
+            status: task.status === "pending" ? "completed" : "pending",
+          }
+        : task,
     );
-    setTodos(updated);
+    setTasks(updated);
   };
   useEffect(() => {
-    localStorage.setItem("todos", JSON.stringify(todos));
-  }, [todos]);
+    if (!accessToken) return;
+    const getTodos = async () => {
+      try {
+        const todayList = await getTasks(accessToken);
+        setTasks(todayList);
+      } catch (error) {
+        console.error("Failed to fetch tasks:", error);
+      }
+    };
+    getTodos();
+  }, [accessToken]);
 
   return (
     <>
@@ -49,14 +69,14 @@ const Today = () => {
         <h2>Today</h2>
         <p>{today}</p>
         <div className="outer-container">
-          {todos.map((todo, index) => {
+          {tasks.map((task, index) => {
             return (
               <TodoCard
                 id={index}
                 time={new Date().toLocaleTimeString()}
-                task={todo.todo}
+                task={task.title}
                 category="General"
-                checked={todo.completed}
+                checked={task.status === "completed"}
                 onCheck={() => handleCheck(index)}
               />
             );

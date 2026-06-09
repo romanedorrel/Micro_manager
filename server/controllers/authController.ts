@@ -1,6 +1,8 @@
 import * as authService from "../services/authService";
 import { Request, Response } from "express";
 
+const isProduction = process.env.NODE_ENV === "production";
+
 export const signUpUser = async (req: Request, res: Response) => {
   try {
     const { email, password } = req.body;
@@ -21,8 +23,8 @@ export const logInUser = async (req: Request, res: Response) => {
 
     res.cookie("refresh_token", data.session.refresh_token, {
       httpOnly: true,
-      secure: true,
-      sameSite: "none",
+      secure: isProduction, // Set to true in production with HTTPS
+      sameSite: isProduction ? "none" : "lax",
       path: "/api/auth/refresh",
     });
     return res
@@ -51,8 +53,8 @@ export const refreshSession = async (req: Request, res: Response) => {
 
     res.cookie("refresh_token", data.session.refresh_token, {
       httpOnly: true,
-      secure: true,
-      sameSite: "none",
+      secure: isProduction, // Set to true in production with HTTPS
+      sameSite: isProduction ? "none" : "lax",
       path: "/api/auth/refresh",
     });
 
@@ -68,8 +70,8 @@ export const refreshSession = async (req: Request, res: Response) => {
 export const logOutUser = async (req: Request, res: Response) => {
   res.clearCookie("refresh_token", {
     httpOnly: true,
-    secure: true,
-    sameSite: "none",
+    secure: isProduction, // Set to true in production with HTTPS
+    sameSite: isProduction ? "none" : "lax",
     path: "/api/auth/refresh",
   });
 

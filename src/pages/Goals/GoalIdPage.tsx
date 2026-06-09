@@ -26,7 +26,7 @@ const GoalIdPage = () => {
   const { accessToken } = useAuth();
   const navigate = useNavigate();
 
-  const handleSubmitTask = async (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmitTask = async (e: React.SubmitEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     if (!accessToken || !goalId || !taskTitle.trim()) return;
