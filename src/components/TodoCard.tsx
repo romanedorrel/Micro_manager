@@ -1,10 +1,10 @@
 type TodoCardProps = {
-  id: number;
+  id: string;
   time: string;
   task: string;
   category: string;
   checked: boolean;
-  onCheck: (id: number) => void;
+  onCheck: (id: string) => void;
 };
 const TodoCard = ({
   id,

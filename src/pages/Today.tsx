@@ -1,14 +1,11 @@
 import { useState, useEffect } from "react";
 import TodoCard from "../components/TodoCard";
-import { Plus } from "lucide-react";
-import { getTasks } from "../services/tasksApi";
+import { getTasks, updateTask } from "../services/tasksApi";
 import type { Task } from "../types/taskTypes";
 import { useAuth } from "../context/AuthContext";
 
 const Today = () => {
   const [tasks, setTasks] = useState<Task[]>([]);
-  const [value, setValue] = useState("");
-  const [inputVisible, setInputVisible] = useState(false);
   const { accessToken } = useAuth();
 
   const today = new Date().toLocaleDateString("en-US", {
@@ -18,40 +15,27 @@ const Today = () => {
     year: "numeric",
   });
 
-  const handleSubmit = () => {
-    if (value.trim() === "") return;
+  const handleCheck = async (task: Task) => {
+    if (!accessToken) return;
 
-    const newTask: Task = {
-      id: Date.now().toString(),
-      title: value,
-      description: "",
-      status: "pending",
-      goal_id: "",
-    };
-    setTasks([...tasks, newTask]);
-    setInputVisible(false);
-    setValue("");
-  };
+    const newStatus = task.status === "completed" ? "pending" : "completed";
 
-  // const handleDelete = (target: number) => {
-  //   const updatedList = todos.filter((_, index) => index !== target);
-  //   setTodos(updatedList);
-  // };
-
-  const handleCheck = (target: number) => {
-    const updated = tasks.map((task, index) =>
-      index == target
-        ? {
-            ...task,
-            status: task.status === "pending" ? "completed" : "pending",
-          }
-        : task,
-    );
-    setTasks(updated);
+    try {
+      const updated = await updateTask(
+        task.id,
+        { status: newStatus },
+        accessToken,
+      );
+      setTasks((currentTasks) =>
+        currentTasks.map((t) => (t.id === task.id ? updated : t)),
+      );
+    } catch (error) {
+      console.error("Failed to update task:", error);
+    }
   };
   useEffect(() => {
     if (!accessToken) return;
-    const getTodos = async () => {
+    const fetchTasks = async () => {
       try {
         const todayList = await getTasks(accessToken);
         setTasks(todayList);
@@ -59,7 +43,7 @@ const Today = () => {
         console.error("Failed to fetch tasks:", error);
       }
     };
-    getTodos();
+    fetchTasks();
   }, [accessToken]);
 
   return (
@@ -69,47 +53,19 @@ const Today = () => {
         <h2>Today</h2>
         <p>{today}</p>
         <div className="outer-container">
-          {tasks.map((task, index) => {
+          {tasks.map((task) => {
             return (
               <TodoCard
-                id={index}
-                time={new Date().toLocaleTimeString()}
+                key={task.id}
+                id={task.id}
+                time=""
                 task={task.title}
                 category="General"
                 checked={task.status === "completed"}
-                onCheck={() => handleCheck(index)}
+                onCheck={() => handleCheck(task)}
               />
             );
           })}
-          <div>
-            <button
-              onClick={() => setInputVisible(true)}
-              className="add-task-btn"
-            >
-              <Plus size={14} /> Add Task
-            </button>{" "}
-            <br />
-            {inputVisible && (
-              <div
-                style={{
-                  display: "flex",
-                  justifyContent: "flex-start",
-                  gap: "12px",
-                }}
-              >
-                <input
-                  type="text"
-                  placeholder="Enter a task"
-                  value={value}
-                  onChange={(e) => setValue(e.target.value)}
-                  className="add-task-input"
-                />
-                <button onClick={handleSubmit} className="add-task-btn">
-                  Save
-                </button>
-              </div>
-            )}
-          </div>
         </div>
       </div>
     </>

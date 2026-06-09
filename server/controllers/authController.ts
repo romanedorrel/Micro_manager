@@ -1,7 +1,7 @@
 import * as authService from "../services/authService";
 import { Request, Response } from "express";
 
-const isProduction = process.env.NODE_ENV === "production";
+const isProduction = process.env.APP_ENV === "production";
 
 export const signUpUser = async (req: Request, res: Response) => {
   try {
