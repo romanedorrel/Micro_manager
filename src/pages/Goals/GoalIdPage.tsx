@@ -183,6 +183,7 @@ const GoalIdPage = () => {
           )}
         </form>
         <div className="task-list">
+          {tasks.length === 0 && <p>No tasks added for this goal yet.</p>}
           {tasks.map((task) => (
             <TaskCard
               key={task.id}
