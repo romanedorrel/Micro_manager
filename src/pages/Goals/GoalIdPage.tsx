@@ -3,6 +3,7 @@ import { getGoalById } from "../../services/goalApi";
 import { useAuth } from "../../context/AuthContext";
 import type { Goal } from "../../types/goalTypes";
 import type { Task } from "../../types/taskTypes";
+import { generateTasks } from "../../services/aiApi";
 import { useParams } from "react-router-dom";
 import {
   getTasksByGoalId,
@@ -14,6 +15,13 @@ import { ArrowLeft } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import TaskCard from "./goalsComponent/TaskCard";
 
+type GeneratedTask = {
+  title: string;
+  description: string;
+  status: "pending";
+  goal_id: string;
+};
+
 const GoalIdPage = () => {
   const [goal, setGoal] = useState<Goal>();
   const [tasks, setTasks] = useState<Task[]>([]);
@@ -21,10 +29,28 @@ const GoalIdPage = () => {
   const [taskTitle, setTaskTitle] = useState("");
   const [taskDescription, setTaskDescription] = useState("");
   const [editingTaskId, setEditingTaskId] = useState<string | null>(null);
+  const [generatedTasks, setGeneratedTasks] = useState<GeneratedTask[]>([]);
+  const [generating, setGenerating] = useState(false);
 
   const { goalId } = useParams();
   const { accessToken } = useAuth();
   const navigate = useNavigate();
+
+  const handleGenerateTasks = async () => {
+    if (!goal) return;
+
+    try {
+      setGenerating(true);
+
+      const data = await generateTasks(goal);
+
+      setGeneratedTasks(data.tasks);
+    } catch (error) {
+      console.error("Failed to generate AI tasks", error);
+    } finally {
+      setGenerating(false);
+    }
+  };
 
   const handleSubmitTask = async (e: React.SubmitEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -194,6 +220,24 @@ const GoalIdPage = () => {
             />
           ))}
         </div>
+        <button
+          type="button"
+          onClick={handleGenerateTasks}
+          disabled={generating}
+        >
+          {generating ? "Generating..." : "Regenerate Plan"}
+        </button>
+        {generatedTasks.length > 0 && (
+          <div className="generated-tasks">
+            <h3>AI Suggested Tasks</h3>
+            {generatedTasks.map((task, index) => (
+              <div key={index} className="generated-task-card">
+                <h4>{task.title}</h4>
+                <p>{task.description}</p>
+              </div>
+            ))}
+          </div>
+        )}
       </div>
     </div>
   );

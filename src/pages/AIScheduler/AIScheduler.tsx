@@ -1,5 +1,4 @@
 import AddGoalForm from "./aiSchedulerComponents/AddGoalForm";
-import GoalPreview from "./aiSchedulerComponents/GoalPreview";
 const AddGoalPage = () => {
   return (
     <main className="add-goal-page">
@@ -10,7 +9,6 @@ const AddGoalPage = () => {
 
       <section className="add-goal-layout">
         <AddGoalForm />
-        <GoalPreview />
       </section>
     </main>
   );

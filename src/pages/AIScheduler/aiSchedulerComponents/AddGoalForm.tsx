@@ -3,6 +3,15 @@ import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../../context/AuthContext";
 import { createGoal } from "../../../services/goalApi";
 import type { GoalInput } from "../../../types/goalTypes";
+import { generateTasks } from "../../../services/aiApi";
+import { createTask } from "../../../services/tasksApi";
+
+type GeneratedTask = {
+  title: string;
+  description: string;
+  status: "pending";
+  goal_id?: string;
+};
 
 const AddGoalForm = () => {
   const [title, setTitle] = useState("");
@@ -26,7 +35,7 @@ const AddGoalForm = () => {
     );
   };
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.SubmitEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     if (!accessToken || !title.trim()) return;
@@ -49,10 +58,24 @@ const AddGoalForm = () => {
         accessToken,
       );
 
+      const generatePlan = await generateTasks(goal);
+      await Promise.all(
+        generatePlan.tasks.map((task: GeneratedTask) =>
+          createTask(
+            {
+              goal_id: goal.id,
+              title: task.title,
+              description: task.description,
+              status: "pending",
+            },
+            accessToken,
+          ),
+        ),
+      );
       navigate(`/goals/${goal.id}`);
     } catch (error) {
       console.error("Failed to create goal", error);
-      setError("Could not create goal. Please try again.");
+      setError("Could not Generate tasks plan. Please try again.");
     } finally {
       setIsSaving(false);
     }
@@ -191,9 +214,6 @@ const AddGoalForm = () => {
         {error && <p>{error}</p>}
 
         <div className="form-actions">
-          <button type="button" className="secondary-btn">
-            Cancel
-          </button>
           <button
             type="submit"
             className="primary-btn"
