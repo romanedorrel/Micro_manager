@@ -5,6 +5,7 @@ import GoalCard from "./goalsComponent/GoalCard";
 import CompletedCard from "./goalsComponent/CompletedCard";
 import type { Goal } from "../../types/goalTypes";
 import { useNavigate } from "react-router-dom";
+import "./goals.css";
 
 const GoalsPage = () => {
   const [goals, setGoals] = useState<Goal[]>([]);

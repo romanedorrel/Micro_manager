@@ -14,6 +14,7 @@ import {
 import { ArrowLeft } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import TaskCard from "./goalsComponent/TaskCard";
+import "./goals.css";
 
 type GeneratedTask = {
   title: string;

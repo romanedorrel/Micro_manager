@@ -2,6 +2,7 @@ import { useState } from "react";
 import CalendarHeader from "./calendarComponents/CalendarHeader";
 import WeekView from "./calendarComponents/WeekView";
 import Detailed from "./calendarComponents/Detailed";
+import "./calendar.css";
 
 type Task = {
   title: string;

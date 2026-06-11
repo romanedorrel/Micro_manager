@@ -1,251 +1,318 @@
 .goal-tabs {
-  gap: 12px;
-  flex-wrap: wrap;
-}
-
-.navTab {
   display: inline-flex;
   align-items: center;
-  gap: 12px;
-  width: fit-content;
-  padding: 10px 22px;
+  gap: 4px;
+  margin-bottom: 18px;
+  padding: 4px;
   border: 1px solid var(--border-color);
-  border-radius: 12px 12px 0 0;
-  background: var(--bg-muted);
+  border-radius: 999px;
+  background: rgba(7, 9, 8, 0.5);
+}
+
+.goal-tabs button {
+  min-width: 110px;
+  padding: 9px 16px;
+  border: 1px solid transparent;
+  border-radius: 999px;
+  background: transparent;
   color: var(--text-secondary);
-  box-shadow: none;
-  opacity: 0.78;
-  text-decoration: none;
-  transform: translateY(4px);
+  font-weight: 700;
   transition:
-    color var(--transition-fast),
     background-color var(--transition-fast),
-    opacity var(--transition-fast),
-    transform var(--transition-fast),
-    box-shadow var(--transition-fast);
+    border-color var(--transition-fast),
+    color var(--transition-fast);
 }
 
-.navTab:hover {
-  color: var(--text-primary);
+.goal-tabs button:hover,
+.goal-tabs .active-tab {
+  border-color: rgba(63, 191, 127, 0.26);
+  background: var(--accent-soft);
+  color: var(--accent-primary-hover);
 }
 
-.navTab.active {
-  padding: 12px 24px;
-  border-color: var(--accent-primary);
-  border-bottom: 2px solid var(--bg-elevated);
-  background: var(--bg-elevated);
-  color: var(--accent-primary);
-  box-shadow: var(--shadow-elevated);
-  opacity: 1;
-  transform: translateY(-4px);
+.goals-content {
+  width: min(100%, 760px);
 }
 
-.goal-card,
-.completed-card {
+.goals-content > div {
+  display: grid;
+  gap: 14px;
+}
+
+.goals-content .goal-card,
+.completed-goal-card {
   width: 100%;
-  padding: 16px;
-  margin-bottom: 16px;
+  padding: 18px;
   border: 1px solid var(--border-color);
-  cursor: pointer;
+  border-radius: var(--radius-primary);
+  background:
+    linear-gradient(145deg, rgba(63, 191, 127, 0.08), rgba(63, 191, 127, 0.02)),
+    rgba(12, 18, 16, 0.82);
+  color: inherit;
+  text-align: left;
+  box-shadow: var(--shadow-primary);
   transition:
-    transform var(--transition-fast),
-    box-shadow var(--transition-fast);
+    border-color var(--transition-fast),
+    box-shadow var(--transition-fast),
+    transform var(--transition-fast);
 }
 
-.goal-card {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  min-width: 280px;
-}
-
-.goal-card:hover,
-.completed-card:hover {
+.goals-content .goal-card:hover,
+.completed-goal-card:hover {
+  border-color: var(--accent-primary-tint-strong);
   box-shadow: var(--shadow-elevated);
   transform: translateY(-2px);
 }
 
-.goal-card h3 {
-  margin: 0;
-  color: var(--text-primary);
-  font-size: var(--font-size-lg);
-}
-
-.goal-card p {
-  margin: 0;
-  line-height: 1.5;
-}
-
-.goal-top {
+.goal-card-header,
+.completed-goal-card h3 {
   display: flex;
-  align-items: stretch;
-  justify-content: space-between;
-  gap: 24px;
+  align-items: center;
+  gap: 14px;
 }
 
-.goal-main {
-  display: flex;
-  align-items: stretch;
-  flex: 1;
-  gap: 18px;
-  min-width: 0;
+.goal-card-header {
+  margin-bottom: 14px;
 }
 
-.goal-icon-wrapper {
-  flex-shrink: 0;
+.goal-icon {
+  display: grid;
   width: 44px;
   height: 44px;
-  border-radius: var(--radius-secondary);
-  background-color: var(--accent-primary-tint);
+  flex: 0 0 auto;
+  place-items: center;
+  border: 1px solid rgba(63, 191, 127, 0.18);
+  border-radius: 14px;
+  background: var(--accent-soft);
+  box-shadow: inset 0 0 18px rgba(63, 191, 127, 0.08);
 }
 
-.goal-icon {
-  color: var(--accent-primary);
-}
-
-.goal-main-column {
-  display: flex;
-  flex: 1;
-  flex-direction: column;
-  justify-content: space-around;
-  gap: 12px;
+.goal-title-group {
   min-width: 0;
-  min-height: 100px;
-  padding-right: 24px;
 }
 
-.goal-description {
-  color: var(--text-secondary);
-  font-size: var(--font-size-sm);
-  line-height: 1.7;
-}
-
-.goal-meta {
-  gap: 16px;
-  flex-wrap: wrap;
-  margin-top: auto;
-  margin-bottom: auto;
-}
-
-.goal-status {
-  width: fit-content;
-  padding: 4px 10px;
-  border-radius: var(--radius-secondary);
-  background-color: var(--accent-success-tint);
-  color: var(--accent-success);
-  font-size: var(--font-size-xs);
-  font-weight: 600;
-}
-
-.goal-due-date {
-  color: var(--text-secondary);
-  font-size: var(--font-size-xs);
-}
-
-.progress-bar {
-  width: 100%;
-  height: 8px;
-  overflow: hidden;
-  border-radius: var(--radius-secondary);
-  background-color: var(--bg-muted);
-}
-
-.progress-fill {
-  height: 100%;
-  border-radius: inherit;
-  background-color: var(--accent-success);
-  transition: width var(--transition-fast);
-}
-
-.goal-footer {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 12px;
-  padding-top: 8px;
-  border-top: 1px solid var(--border-color);
-}
-
-.goal-footer-item {
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-}
-
-.goal-footer-item strong {
+.goal-title-group h3,
+.completed-goal-card h3,
+.task-card h3 {
+  margin: 0;
   color: var(--text-primary);
-  font-size: var(--font-size-sm);
 }
 
-.goal-footer-item span {
+.goal-description,
+.completed-goal-description,
+.task-description,
+.task-meta {
   color: var(--text-secondary);
-  font-size: var(--font-size-xs);
 }
 
-.progress-circle {
-  flex-direction: column;
-  gap: 4px;
+.goal-description,
+.completed-goal-description {
+  margin: 5px 0 0;
 }
 
-.progress-ring {
-  width: 116px;
-  height: 116px;
-  transform: rotate(-90deg);
-}
-
-.progress-ring-bg {
-  fill: none;
-  stroke: var(--border-color);
-  stroke-width: 8;
-}
-
-.progress-ring-fill {
-  fill: none;
-  stroke: var(--accent-success);
-  stroke-linecap: round;
-  stroke-width: 7;
-  transition: stroke-dashoffset 0.5s ease;
-}
-
-.progress-text {
-  fill: var(--text-secondary);
-  font-size: 16px;
-  font-weight: 400;
-  text-anchor: middle;
-  transform: rotate(90deg);
-  transform-origin: center;
-}
-
-.completed-card {
-  justify-content: space-between;
-  gap: 16px;
-}
-
-.goal-tabs,
-.goal-icon-wrapper,
-.goal-icon,
-.goal-meta,
-.progress-circle,
-.completed-card {
+.goal-card-meta {
   display: flex;
-  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding-top: 14px;
+  border-top: 1px solid rgba(89, 113, 100, 0.22);
 }
 
-.goal-icon-wrapper,
-.goal-icon {
-  justify-content: center;
-}
-
-.goal-status {
+.goal-card-meta span,
+.completed-goal-badge,
+.task-status {
   display: inline-flex;
   align-items: center;
+  width: fit-content;
+  padding: 4px 9px;
+  border-radius: 999px;
+  font-size: var(--font-size-xs);
+  font-weight: 800;
+  text-transform: capitalize;
 }
 
-.completed-card-icon,
-.completed-card-title {
+.goal-card-meta span {
+  background: rgba(255, 255, 255, 0.045);
+  color: var(--text-secondary);
+}
+
+.completed-goal-card h3 {
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+.completed-goal-card h3 svg {
   color: var(--accent-success);
 }
 
-.completed-card span {
+.completed-goal-badge,
+.task-status.completed {
+  background: var(--accent-success-tint);
+  color: var(--accent-success);
+}
+
+.goal_detail_header {
+  display: grid;
+  width: min(100%, 820px);
+  gap: 18px;
+  padding: 22px;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-primary);
+  background:
+    radial-gradient(circle at 10% 0%, rgba(63, 191, 127, 0.12), transparent 32%),
+    linear-gradient(155deg, rgba(16, 24, 22, 0.94), rgba(7, 10, 9, 0.96));
+  box-shadow: var(--shadow-elevated);
+}
+
+.goal_detail_header h2 {
+  margin-bottom: 0;
+}
+
+.goal_detail_header > div:first-of-type {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.goal_detail_header > div:first-of-type p {
+  margin: 0;
+  padding: 5px 10px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.045);
   color: var(--text-secondary);
+  font-size: var(--font-size-xs);
+  font-weight: 800;
+  text-transform: capitalize;
+}
+
+.goal_detail_header + button,
+.app-content main > div > button:first-child {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 18px;
+  padding: 8px 12px;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-secondary);
+  background: rgba(7, 9, 8, 0.48);
+  color: var(--text-secondary);
+}
+
+.task-form {
+  display: grid;
+  gap: 12px;
+}
+
+.task-form button,
+.goal_detail_header > button {
+  width: fit-content;
+  min-height: 40px;
+  padding: 0 15px;
+  border: 1px solid var(--accent-primary-tint-strong);
+  border-radius: var(--radius-secondary);
+  background: linear-gradient(135deg, var(--accent-primary), #2f8f60);
+  color: var(--text-on-dark);
+  font-weight: 800;
+}
+
+.task-form button[type="button"] {
+  border-color: var(--border-color);
+  background: rgba(255, 255, 255, 0.045);
+  color: var(--text-secondary);
+}
+
+.task-list {
+  display: grid;
+  gap: 12px;
+}
+
+.goal_detail_header .task-card,
+.generated-task-card {
+  padding: 14px;
+  border: 1px solid rgba(89, 113, 100, 0.24);
+  border-radius: 12px;
+  background: rgba(7, 9, 8, 0.42);
+}
+
+.task-card-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 14px;
+}
+
+.task-check-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+}
+
+.task-check-row input {
+  width: 18px;
+  height: 18px;
+  min-height: 0;
+  accent-color: var(--accent-primary);
+}
+
+.task-title-completed {
+  color: var(--text-muted);
+  text-decoration: line-through;
+}
+
+.task-status.pending {
+  background: rgba(214, 168, 79, 0.14);
+  color: var(--accent-warning);
+}
+
+.task-description {
+  margin: 10px 0 0;
+}
+
+.task-meta {
+  margin-top: 8px;
   font-size: var(--font-size-sm);
+}
+
+.task-actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.task-actions button {
+  padding: 7px 10px;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.045);
+  color: var(--text-secondary);
+}
+
+.generated-tasks {
+  margin-top: 4px;
+  padding: 18px;
+  border: 1px solid var(--ai-border);
+  border-radius: var(--radius-primary);
+  background:
+    linear-gradient(180deg, rgba(63, 191, 127, 0.12), rgba(19, 32, 27, 0.85)),
+    var(--ai-bg);
+  box-shadow: var(--shadow-primary);
+}
+
+.generated-tasks h3 {
+  margin-bottom: 12px;
+}
+
+.generated-task-card + .generated-task-card {
+  margin-top: 10px;
+}
+
+.generated-task-card h4 {
+  margin: 0 0 5px;
+  color: var(--text-primary);
+}
+
+.generated-task-card p {
+  margin: 0;
+  color: var(--text-secondary);
 }

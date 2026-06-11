@@ -1,4 +1,6 @@
 import AddGoalForm from "./aiSchedulerComponents/AddGoalForm";
+import "./aiScheduler.css";
+
 const AddGoalPage = () => {
   return (
     <main className="add-goal-page">

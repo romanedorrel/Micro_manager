@@ -2,6 +2,7 @@ import { useState } from "react";
 import { logIn } from "../../services/authApi";
 import { useAuth } from "../../context/AuthContext";
 import { Link, useNavigate } from "react-router-dom";
+import "./auth.css";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -27,7 +28,7 @@ const Login = () => {
     <div className="auth-page">
       <section className="auth-hero">
         <p className="auth-label">AI Scheduler</p>
-        <h1>Start with the next right task.</h1>
+        <h1>Start with the right task.</h1>
         <p>
           A calm planning system that helps you turn goals into focused daily
           action.

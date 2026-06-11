@@ -1,19 +1,61 @@
 .sidebar {
-  min-height: 100vh;
+  position: fixed;
+  inset: 0 auto 0 0;
+  z-index: 5;
+  display: flex;
   width: 250px;
+  min-height: 100vh;
+  flex-direction: column;
+  padding: 28px 16px 24px;
+  border-right: 1px solid var(--border-shell);
+  background:
+    radial-gradient(circle at 28% 10%, rgba(63, 191, 127, 0.13), transparent 28%),
+    linear-gradient(180deg, rgba(13, 22, 19, 0.96), rgba(6, 10, 9, 0.98));
+  box-shadow: 18px 0 44px rgba(0, 0, 0, 0.26);
+  backdrop-filter: blur(18px);
+}
+
+.sidebar h2 {
+  order: -1;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 0 0 30px;
+  color: var(--text-primary);
+  font-size: var(--font-size-md);
+  font-weight: 800;
+}
+
+.sidebar h2::before {
+  content: "";
+  width: 34px;
+  height: 34px;
+  flex: 0 0 auto;
+  border: 1px solid rgba(85, 217, 149, 0.42);
+  border-radius: 10px;
+  background:
+    linear-gradient(135deg, transparent 42%, rgba(85, 217, 149, 0.32) 42% 58%, transparent 58%),
+    radial-gradient(circle at 70% 28%, var(--accent-primary-hover) 0 9%, transparent 10%),
+    linear-gradient(145deg, rgba(63, 191, 127, 0.26), rgba(8, 15, 12, 0.92));
+  box-shadow: 0 0 22px rgba(63, 191, 127, 0.22);
+}
+
+.sidebar nav {
+  margin-top: 8px;
+}
+
+.sidebar ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.sidebar nav ul {
   display: flex;
   flex-direction: column;
-  position: fixed;
-  z-index: 1;
-  top: 0;
-  left: 0;
-  background:
-    radial-gradient(circle at 30% 0%, rgba(124, 108, 242, 0.16), transparent 30%),
-    linear-gradient(180deg, #101827 0%, #07101d 100%);
-  border-right: 1px solid var(--border-shell);
-  padding: 28px 16px 24px;
-  box-shadow: 12px 0 32px rgba(0, 0, 0, 0.18);
+  gap: 8px;
 }
+
 .sidebar a,
 .sidebar button {
   display: flex;
@@ -22,143 +64,233 @@
   width: 100%;
   min-height: 44px;
   padding: 11px 14px;
-  text-decoration: none;
+  border: 1px solid transparent;
+  border-radius: 9px;
+  background: transparent;
+  color: var(--text-secondary);
+  font-family: inherit;
   font-size: var(--font-size-sm);
-  border-radius: 8px;
+  text-align: left;
+  text-decoration: none;
   transition:
     background-color var(--transition-fast),
+    border-color var(--transition-fast),
     color var(--transition-fast),
-    box-shadow var(--transition-fast),
     transform var(--transition-fast);
-  color: var(--text-on-dark-secondary);
-  font-family: inherit;
-  background: none;
-  border: none;
-  text-align: left;
-  cursor: pointer;
 }
-.sidebar h2 {
-  order: -1;
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  margin: 0 0 30px;
-  color: var(--text-on-dark);
-  font-size: var(--font-size-md);
-  font-weight: 800;
-}
-.sidebar h2::before {
-  content: "";
-  display: inline-block;
-  width: 36px;
-  height: 36px;
-  border-radius: 12px;
-  background:
-    radial-gradient(circle at 50% 50%, #07101d 0 28%, transparent 30%),
-    linear-gradient(135deg, var(--accent-primary), var(--accent-primary-hover));
-  box-shadow: 0 10px 24px rgba(124, 108, 242, 0.34);
-  flex: 0 0 auto;
-}
-.sidebar nav {
-  margin-top: 8px;
-}
+
 .items-left {
   display: flex;
   align-items: center;
   gap: 12px;
   min-width: 0;
 }
+
 .items-left svg {
   flex: 0 0 auto;
   color: currentColor;
 }
+
 .sidebar a:hover,
 .sidebar button:hover {
-  background-color: rgba(255, 255, 255, 0.06);
-  color: var(--text-on-dark);
+  border-color: rgba(63, 191, 127, 0.18);
+  background: rgba(63, 191, 127, 0.08);
+  color: var(--text-primary);
   transform: translateX(2px);
 }
-.sidebar ul {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-.sidebar nav ul {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-.sidebar ul ul {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-  padding: 8px;
-  margin-top: 8px;
-  border-radius: 10px;
-  background-color: rgba(4, 10, 20, 0.54);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-}
+
 .sidebar .active {
-  background: linear-gradient(135deg, var(--accent-primary), #5f48c9);
-  color: var(--text-on-dark);
-  box-shadow: 0 12px 24px rgba(124, 108, 242, 0.28);
+  border-color: rgba(63, 191, 127, 0.28);
+  background: linear-gradient(135deg, rgba(63, 191, 127, 0.24), rgba(63, 191, 127, 0.1));
+  color: var(--text-primary);
+  box-shadow: inset 0 0 0 1px rgba(85, 217, 149, 0.05);
 }
+
 .profile-section {
   order: 10;
   margin-top: auto;
-  padding: 18px 0 0;
-  border-top: 1px solid rgba(255, 255, 255, 0.08);
-  border-bottom: 0;
+  padding-top: 18px;
+  border-top: 1px solid rgba(89, 113, 100, 0.22);
 }
+
 .profile-section > button {
   min-height: 52px;
   padding: 8px;
-  color: var(--text-on-dark);
+  color: var(--text-primary);
 }
+
 .profile-section > button .items-left {
   gap: 10px;
 }
+
 .profile-section > button .items-left svg {
   width: 34px;
   height: 34px;
   padding: 7px;
   border-radius: var(--radius-secondary);
-  background: rgba(255, 255, 255, 0.2);
-  color: var(--text-on-dark);
+  background: var(--accent-soft);
+  color: var(--accent-primary-hover);
 }
+
 .profile-section > button .items-left span {
   font-weight: 700;
 }
+
+.sidebar ul ul {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-top: 8px;
+  padding: 8px;
+  border: 1px solid rgba(89, 113, 100, 0.2);
+  border-radius: 10px;
+  background: rgba(5, 8, 7, 0.48);
+}
+
 .profile-section ul a {
   min-height: 38px;
   padding: 8px 10px;
   font-size: var(--font-size-xs);
 }
+
 .sidebar .quotes-card {
   margin: auto 0 18px;
   padding: 14px;
-  background: rgba(255, 255, 255, 0.045);
-  border-color: rgba(255, 255, 255, 0.08);
-  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.14);
+  border: 1px solid rgba(89, 113, 100, 0.24);
+  border-radius: var(--radius-primary);
+  background:
+    linear-gradient(145deg, rgba(63, 191, 127, 0.08), transparent),
+    rgba(255, 255, 255, 0.035);
+  box-shadow: var(--shadow-primary);
 }
+
 .sidebar .quotes-card-text {
-  color: rgba(244, 246, 250, 0.78);
-  line-height: 1.5;
+  margin: 0;
+  color: var(--text-secondary);
+  font-size: var(--font-size-sm);
+  line-height: 1.55;
 }
+
 .sidebar .quotes-card-icon {
+  margin-bottom: 8px;
   color: var(--accent-primary-hover);
 }
+
 .sidebar > div:last-child {
   order: 11;
   margin-top: 12px;
 }
+
 .sidebar > div:last-child button {
   justify-content: center;
-  color: rgba(244, 246, 250, 0.72);
-  background: rgba(255, 255, 255, 0.04);
+  color: var(--text-secondary);
+  background: rgba(255, 255, 255, 0.035);
 }
+
 .app-content {
+  min-height: 100vh;
   margin-left: 250px;
-  padding: 2rem;
-  overflow: scroll;
+  padding: 32px;
+}
+
+body:has(.auth-page) .sidebar {
+  display: none;
+}
+
+body:has(.auth-page) .app-content {
+  display: grid;
+  margin-left: 0;
+  place-items: center;
+}
+
+.app-content main {
+  width: min(100%, 1180px);
+}
+
+.app-content h1,
+.app-content h2,
+.app-content h3,
+.app-content p {
+  margin-top: 0;
+}
+
+.app-content main > div > h2 {
+  margin-bottom: 4px;
+  color: var(--text-primary);
+  font-size: clamp(1.8rem, 2vw, 2.35rem);
+  line-height: 1.12;
+}
+
+.app-content main > div > h2 + p {
+  margin-bottom: 24px;
+  color: var(--text-secondary);
+}
+
+.outer-container {
+  display: grid;
+  width: min(100%, 760px);
+  gap: 12px;
+  padding: 16px;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-primary);
+  background:
+    linear-gradient(160deg, rgba(63, 191, 127, 0.07), rgba(63, 191, 127, 0.01)),
+    rgba(12, 18, 16, 0.82);
+  box-shadow: var(--shadow-primary);
+}
+
+.todo-card {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 12px;
+  padding: 14px;
+  border: 1px solid rgba(89, 113, 100, 0.24);
+  border-radius: 12px;
+  background: rgba(7, 9, 8, 0.42);
+}
+
+.todo-card h3 {
+  margin: 0;
+  color: var(--accent-primary);
+  font-size: var(--font-size-xs);
+  font-weight: 700;
+}
+
+.todo-card p {
+  margin: 0;
+  color: var(--text-primary);
+  font-weight: 600;
+}
+
+.todo-card span {
+  justify-self: start;
+  padding: 3px 9px;
+  border-radius: 999px;
+  background: var(--accent-soft);
+  color: var(--accent-primary-hover);
+  font-size: var(--font-size-xs);
+  font-weight: 700;
+}
+
+.todo-card input {
+  grid-column: 3;
+  grid-row: 1 / span 2;
+  width: 18px;
+  height: 18px;
+  min-height: 0;
+  accent-color: var(--accent-primary);
+}
+
+@media (max-width: 860px) {
+  .sidebar {
+    position: static;
+    width: 100%;
+    min-height: auto;
+  }
+
+  .app-content {
+    margin-left: 0;
+    padding: 20px;
+  }
 }
