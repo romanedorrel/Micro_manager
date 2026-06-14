@@ -13,8 +13,11 @@ import {
 } from "../../services/tasksApi";
 import { ArrowLeft } from "lucide-react";
 import { useNavigate } from "react-router-dom";
-import TaskCard from "./goalsComponent/TaskCard";
 import "./goals.css";
+import GoalIDHeader from "./goalsComponent/GoalIDHeader";
+import TaskForm from "./goalsComponent/TaskForm";
+import TaskList from "./goalsComponent/TaskList";
+import GeneratedTaskList from "./goalsComponent/GeneratedTaskList";
 
 type GeneratedTask = {
   title: string;
@@ -32,7 +35,7 @@ const GoalIdPage = () => {
   const [editingTaskId, setEditingTaskId] = useState<string | null>(null);
   const [generatedTasks, setGeneratedTasks] = useState<GeneratedTask[]>([]);
   const [generating, setGenerating] = useState(false);
-
+  const [showTaskForm, setShowTaskForm] = useState(false);
   const { goalId } = useParams();
   const { accessToken } = useAuth();
   const navigate = useNavigate();
@@ -92,6 +95,7 @@ const GoalIdPage = () => {
 
       setTaskTitle("");
       setTaskDescription("");
+      setShowTaskForm(false);
     } catch (error) {
       console.error("Failed to save task", error);
     }
@@ -101,6 +105,7 @@ const GoalIdPage = () => {
     setEditingTaskId(task.id);
     setTaskTitle(task.title);
     setTaskDescription(task.description || "");
+    setShowTaskForm(true);
   };
 
   const handleDeleteTask = async (taskId: string) => {
@@ -136,6 +141,30 @@ const GoalIdPage = () => {
       console.error("Failed to update task", error);
     }
   };
+
+  const handleSaveGeneratedTasks = async () => {
+    if (!accessToken || !goalId) return;
+
+    try {
+      const savedTasks = await Promise.all(
+        generatedTasks.map((task) =>
+          createTask(
+            {
+              goal_id: goalId,
+              title: task.title,
+              description: task.description,
+              status: "pending",
+            },
+            accessToken,
+          ),
+        ),
+      );
+      setTasks(savedTasks);
+      setGeneratedTasks([]);
+    } catch (error) {
+      console.error("Failed to save generated tasks", error);
+    }
+  };
   useEffect(() => {
     if (!goalId || !accessToken) return;
 
@@ -169,77 +198,42 @@ const GoalIdPage = () => {
         <ArrowLeft size={28} />
         Back
       </button>
-      <div className="goal_detail_header">
-        {" "}
-        <h2>{goal.title}</h2>
-        <p>{goal.description}</p>
-        <div>
-          <p>{goal.deadline}</p>
-          <p>{goal.priority}</p>
-          <p>{goal.effort}</p>
-        </div>
-        <form className="task-form" onSubmit={handleSubmitTask}>
-          <input
-            type="text"
-            placeholder="Task title"
-            value={taskTitle}
-            onChange={(e) => setTaskTitle(e.target.value)}
-          />
+      <GoalIDHeader goal={goal} />
 
-          <textarea
-            placeholder="Task description"
-            value={taskDescription}
-            onChange={(e) => setTaskDescription(e.target.value)}
-          />
-
-          <button type="submit">
-            {editingTaskId ? "Save Task" : "Add Task"}
-          </button>
-
-          {editingTaskId && (
-            <button
-              type="button"
-              onClick={() => {
-                setEditingTaskId(null);
-                setTaskTitle("");
-                setTaskDescription("");
-              }}
-            >
-              Cancel
-            </button>
-          )}
-        </form>
-        <div className="task-list">
-          {tasks.length === 0 && <p>No tasks added for this goal yet.</p>}
-          {tasks.map((task) => (
-            <TaskCard
-              key={task.id}
-              task={task}
-              onToggleComplete={() => handleToggleComplete(task)}
-              onEdit={() => handleEditTask(task)}
-              onDelete={() => handleDeleteTask(task.id)}
-            />
-          ))}
-        </div>
-        <button
-          type="button"
-          onClick={handleGenerateTasks}
-          disabled={generating}
-        >
-          {generating ? "Generating..." : "Regenerate Plan"}
+      <TaskList
+        tasks={tasks}
+        onToggleComplete={handleToggleComplete}
+        onEdit={handleEditTask}
+        onDelete={handleDeleteTask}
+      />
+      {!showTaskForm && (
+        <button type="submit" onClick={() => setShowTaskForm(true)}>
+          Add Task
         </button>
-        {generatedTasks.length > 0 && (
-          <div className="generated-tasks">
-            <h3>AI Suggested Tasks</h3>
-            {generatedTasks.map((task, index) => (
-              <div key={index} className="generated-task-card">
-                <h4>{task.title}</h4>
-                <p>{task.description}</p>
-              </div>
-            ))}
-          </div>
-        )}
-      </div>
+      )}
+
+      {showTaskForm && (
+        <TaskForm
+          taskTitle={taskTitle}
+          taskDescription={taskDescription}
+          editingTaskId={editingTaskId}
+          onTitleChange={setTaskTitle}
+          onDescriptionChange={setTaskDescription}
+          onSubmit={handleSubmitTask}
+          onCancelEdit={() => {
+            setEditingTaskId(null);
+            setTaskTitle("");
+            setTaskDescription("");
+            setShowTaskForm(false);
+          }}
+        />
+      )}
+      <GeneratedTaskList
+        generatedTasks={generatedTasks}
+        generating={generating}
+        onGenerate={handleGenerateTasks}
+        onSaveGeneratedTask={handleSaveGeneratedTasks}
+      />
     </div>
   );
 };
