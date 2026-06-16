@@ -22,8 +22,6 @@ import GeneratedTaskList from "./goalsComponent/GeneratedTaskList";
 type GeneratedTask = {
   title: string;
   description: string;
-  status: "pending";
-  goal_id: string;
 };
 
 const GoalIdPage = () => {
@@ -39,6 +37,28 @@ const GoalIdPage = () => {
   const { goalId } = useParams();
   const { accessToken } = useAuth();
   const navigate = useNavigate();
+
+  // Evenly distribute generated tasks between today and the goal deadline
+  // while preserving their original order.
+  const scheduleTasks = (tasks: GeneratedTask[], deadline: string) => {
+    const today = new Date();
+    const endDate = new Date(deadline);
+
+    const totalDays =
+      Math.floor((endDate.getTime() - today.getTime()) / (3600000 * 24)) + 1;
+
+    return tasks.map((task, index) => {
+      const dayOffset = Math.floor((index * totalDays) / tasks.length);
+
+      const scheduledDate = new Date(today);
+      scheduledDate.setDate(today.getDate() + dayOffset);
+
+      return {
+        ...task,
+        scheduled_date: scheduledDate.toISOString().split("T")[0],
+      };
+    });
+  };
 
   const handleGenerateTasks = async () => {
     if (!goal) return;
@@ -59,7 +79,7 @@ const GoalIdPage = () => {
   const handleSubmitTask = async (e: React.SubmitEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    if (!accessToken || !goalId || !taskTitle.trim()) return;
+    if (!accessToken || !goalId || !goal || !taskTitle.trim()) return;
 
     try {
       if (editingTaskId) {
@@ -86,6 +106,7 @@ const GoalIdPage = () => {
             title: taskTitle,
             description: taskDescription,
             status: "pending",
+            scheduled_date: new Date().toISOString().split("T")[0],
           },
           accessToken,
         );
@@ -143,17 +164,19 @@ const GoalIdPage = () => {
   };
 
   const handleSaveGeneratedTasks = async () => {
-    if (!accessToken || !goalId) return;
+    if (!accessToken || !goalId || !goal) return;
 
     try {
+      const scheduledTasks = scheduleTasks(generatedTasks, goal.deadline);
       const savedTasks = await Promise.all(
-        generatedTasks.map((task) =>
+        scheduledTasks.map((task) =>
           createTask(
             {
               goal_id: goalId,
               title: task.title,
               description: task.description,
               status: "pending",
+              scheduled_date: task.scheduled_date,
             },
             accessToken,
           ),

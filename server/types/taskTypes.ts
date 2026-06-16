@@ -5,6 +5,7 @@ export type TaskInput = {
   estimated_duration?: string;
   status?: "pending" | "completed";
   order_position?: number;
+  scheduled_date?: string | null;
 };
 
 export type Task = TaskInput & {

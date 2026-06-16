@@ -1,10 +1,5 @@
-import TaskCard from "./TaskCard";
-
-type Task = {
-  title: string;
-  time: string;
-  priority: "High" | "Medium" | "Low";
-};
+import CalendarTaskCard from "./CalendarTaskCard";
+import type { Task } from "../../../types/taskTypes";
 
 type WeekDay = {
   day: string;
@@ -30,7 +25,9 @@ const DayColumn = ({ day, onSelectedDay }: DayColumnProps) => {
 
       <div className="day-column-tasks">
         {day.tasks.length > 0 ? (
-          day.tasks.map((task, index) => <TaskCard key={index} task={task} />)
+          day.tasks.map((task) => (
+            <CalendarTaskCard key={task.id} task={task} />
+          ))
         ) : (
           <div className="empty-day">
             <span>No Tasks</span>

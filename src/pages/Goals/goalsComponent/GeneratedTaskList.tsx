@@ -1,8 +1,6 @@
 type GeneratedTask = {
   title: string;
   description: string;
-  status: "pending";
-  goal_id: string;
 };
 
 type Props = {

@@ -1,7 +1,7 @@
 export type GoalInput = {
   title: string;
   description?: string;
-  deadline?: string;
+  deadline: string;
   priority?: "low" | "medium" | "high";
   effort?: "low" | "medium" | "high";
   available_days?: string[];

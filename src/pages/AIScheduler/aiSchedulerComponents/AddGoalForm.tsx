@@ -35,10 +35,32 @@ const AddGoalForm = () => {
     );
   };
 
+  // Evenly distribute generated tasks between today and the goal deadline
+  // while preserving their original order.
+  const scheduleTasks = (tasks: GeneratedTask[], deadline: string) => {
+    const today = new Date();
+    const endDate = new Date(deadline);
+
+    const totalDays =
+      Math.floor((endDate.getTime() - today.getTime()) / (3600000 * 24)) + 1;
+
+    return tasks.map((task, index) => {
+      const dayOffset = Math.floor((index * totalDays) / tasks.length);
+
+      const scheduledDate = new Date(today);
+      scheduledDate.setDate(today.getDate() + dayOffset);
+
+      return {
+        ...task,
+        scheduled_date: scheduledDate.toISOString().split("T")[0],
+      };
+    });
+  };
+
   const handleSubmit = async (e: React.SubmitEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    if (!accessToken || !title.trim()) return;
+    if (!accessToken || !title.trim() || !deadline) return;
 
     setError("");
     setIsSaving(true);
@@ -48,7 +70,7 @@ const AddGoalForm = () => {
         {
           title,
           description,
-          deadline: deadline || undefined,
+          deadline,
           priority,
           effort,
           available_days: availableDays,
@@ -57,16 +79,18 @@ const AddGoalForm = () => {
         },
         accessToken,
       );
-
       const generatePlan = await generateTasks(goal);
+      const scheduledTasks = scheduleTasks(generatePlan.tasks, deadline);
+
       await Promise.all(
-        generatePlan.tasks.map((task: GeneratedTask) =>
+        scheduledTasks.map((task: GeneratedTask & { scheduled_date: string }) =>
           createTask(
             {
               goal_id: goal.id,
               title: task.title,
               description: task.description,
               status: "pending",
+              scheduled_date: task.scheduled_date,
             },
             accessToken,
           ),
@@ -75,7 +99,7 @@ const AddGoalForm = () => {
       navigate(`/goals/${goal.id}`);
     } catch (error) {
       console.error("Failed to create goal", error);
-      setError("Could not Generate tasks plan. Please try again.");
+      setError("Could not generate tasks plan. Please try again.");
     } finally {
       setIsSaving(false);
     }
@@ -217,7 +241,7 @@ const AddGoalForm = () => {
           <button
             type="submit"
             className="primary-btn"
-            disabled={isSaving || !title.trim()}
+            disabled={isSaving || !title.trim() || !deadline}
           >
             {isSaving ? "Generating..." : "Generate Plan"}
           </button>

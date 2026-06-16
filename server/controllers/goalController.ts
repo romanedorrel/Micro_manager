@@ -9,7 +9,10 @@ export const getGoals = async (req: AuthRequest, res: Response) => {
     const goals = await goalService.getGoals(userId, req.accessToken);
     res.status(200).json(goals);
   } catch (error) {
-    return res.status(500).json({ message: error });
+    console.error("Failed to get goals", error);
+    return res
+      .status(500)
+      .json({ message: "Failed to get goals. Please try again" });
   }
 };
 
@@ -28,13 +31,22 @@ export const getGoal = async (req: AuthRequest<IdParams>, res: Response) => {
     }
     res.status(200).json(goal);
   } catch (error) {
-    return res.status(500).json({ message: error });
+    console.error("Failed to get goal", error);
+    return res
+      .status(500)
+      .json({ message: "Failed to get goal. Please try again" });
   }
 };
 
 export const createGoal = async (req: AuthRequest, res: Response) => {
   try {
     const userId = req.user.id;
+    const { title, deadline } = req.body;
+    if (!title || !deadline) {
+      return res
+        .status(400)
+        .json({ message: "Title and deadline is required to create a goal" });
+    }
     const goal = await goalService.createGoal(
       req.body,
       userId,
@@ -42,7 +54,10 @@ export const createGoal = async (req: AuthRequest, res: Response) => {
     );
     res.status(201).json(goal);
   } catch (error) {
-    return res.status(400).json({ message: error });
+    console.error("Failed to create goal", error);
+    return res
+      .status(500)
+      .json({ message: "Unable to create the goal. Please try again" });
   }
 };
 
@@ -59,9 +74,12 @@ export const updateGoal = async (req: AuthRequest<IdParams>, res: Response) => {
     if (!goal) {
       return res.status(404).json({ message: "No Goal Found" });
     }
-    res.status(200).json({ goal });
+    res.status(200).json(goal);
   } catch (e) {
-    return res.status(500).json({ message: e });
+    console.error("Failed to update goal", e);
+    return res
+      .status(500)
+      .json({ message: "Failed to update goal. Please try again" });
   }
 };
 
@@ -79,6 +97,9 @@ export const deleteGoal = async (req: AuthRequest<IdParams>, res: Response) => {
     }
     res.status(200).json({ message: "Goal deleted successfully" });
   } catch (e) {
-    return res.status(500).json({ message: e });
+    console.error("Failed to delete goal", e);
+    return res
+      .status(500)
+      .json({ message: "Failed to delete goal. Please try again" });
   }
 };

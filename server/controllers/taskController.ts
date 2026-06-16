@@ -34,15 +34,12 @@ export const getTasksByGoal = async (
   try {
     const userId = req.user.id;
     const { goalId } = req.params;
-    const task = await taskService.getTasksByGoal(
+    const tasks = await taskService.getTasksByGoal(
       goalId,
       userId,
       req.accessToken,
     );
-    if (!task) {
-      return res.status(200).json({ message: "No Task found" });
-    }
-    res.status(200).json(task);
+    res.status(200).json(tasks);
   } catch (error) {
     return res.status(500).json({ message: error });
   }
@@ -51,10 +48,19 @@ export const getTasksByGoal = async (
 export const createTask = async (req: AuthRequest, res: Response) => {
   try {
     const userId = req.user.id;
-    const task = await taskService.createTask(req.body, userId, req.accessToken);
+    const { title } = req.body;
+    if (!title) {
+      return res.status(400).json({ message: "Tasks require a title" });
+    }
+    const task = await taskService.createTask(
+      req.body,
+      userId,
+      req.accessToken,
+    );
     res.status(201).json(task);
   } catch (error) {
-    return res.status(400).json({ message: error });
+    console.error("Failed to create task", error);
+    return res.status(500).json({ message: "Failed to fetch tasks." });
   }
 };
 
@@ -73,7 +79,8 @@ export const updateTask = async (req: AuthRequest<IdParams>, res: Response) => {
     }
     res.status(200).json(task);
   } catch (e) {
-    return res.status(500).json({ message: e });
+    console.error("Failed to update task", e);
+    return res.status(500).json({ message: "Failed to update task" });
   }
 };
 
@@ -91,6 +98,7 @@ export const deleteTask = async (req: AuthRequest<IdParams>, res: Response) => {
     }
     res.status(200).json({ message: "Task deleted successfully" });
   } catch (e) {
-    return res.status(500).json({ message: e });
+    console.error("Failed to delete task", e);
+    return res.status(500).json({ message: "Failed to delete task" });
   }
 };

@@ -1,10 +1,5 @@
 import WeekGrid from "./WeekGrid";
-
-type Task = {
-  title: string;
-  time: string;
-  priority: "High" | "Medium" | "Low";
-};
+import type { Task } from "../../../types/taskTypes";
 
 type WeekDay = {
   day: string;
@@ -13,7 +8,7 @@ type WeekDay = {
 };
 
 type WeekViewProps = {
-  weekData: WeekDay[];
+  weekData: Map<string, Task[]>;
   setSelectedDay: (day: WeekDay) => void;
 };
 

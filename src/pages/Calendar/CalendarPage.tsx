@@ -1,14 +1,11 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import CalendarHeader from "./calendarComponents/CalendarHeader";
 import WeekView from "./calendarComponents/WeekView";
 import Detailed from "./calendarComponents/Detailed";
 import "./calendar.css";
-
-type Task = {
-  title: string;
-  time: string;
-  priority: "High" | "Medium" | "Low";
-};
+import { getTasks } from "../../services/tasksApi";
+import { useAuth } from "../../context/AuthContext";
+import type { Task } from "../../types/taskTypes";
 
 type WeekDay = {
   day: string;
@@ -18,72 +15,43 @@ type WeekDay = {
 
 const CalendarPage = () => {
   const [selectedDay, setSelectedDay] = useState<WeekDay | null>(null);
-  const weekData: WeekDay[] = [
-    {
-      day: "Mon",
-      date: "May 25",
-      tasks: [
-        {
-          title: "Build calendar layout",
-          time: "9:00 PM",
-          priority: "High",
-        },
-        {
-          title: "Style task cards",
-          time: "10:30 PM",
-          priority: "Medium",
-        },
-      ],
-    },
-    {
-      day: "Tue",
-      date: "May 26",
-      tasks: [
-        {
-          title: "Create week grid",
-          time: "8:00 PM",
-          priority: "High",
-        },
-      ],
-    },
-    {
-      day: "Wed",
-      date: "May 27",
-      tasks: [],
-    },
-    {
-      day: "Thu",
-      date: "May 28",
-      tasks: [
-        {
-          title: "Design overview page",
-          time: "9:30 PM",
-          priority: "Low",
-        },
-      ],
-    },
-    {
-      day: "Fri",
-      date: "May 29",
-      tasks: [],
-    },
-    {
-      day: "Sat",
-      date: "May 30",
-      tasks: [],
-    },
-    {
-      day: "Sun",
-      date: "May 31",
-      tasks: [],
-    },
-  ];
+  const [groupedTasks, setGroupedTasks] = useState<Map<string, Task[]>>(
+    new Map(),
+  );
+  const { accessToken } = useAuth();
+  useEffect(() => {
+    if (!accessToken) return;
+
+    const fetchAndGroupTasks = async () => {
+      try {
+        const fetchedTasks = await getTasks(accessToken);
+        console.log("fetchedTasks", fetchedTasks);
+        const grouped = new Map<string, Task[]>();
+
+        for (const task of fetchedTasks) {
+          if (!task.scheduled_date) continue;
+
+          if (!grouped.has(task.scheduled_date)) {
+            grouped.set(task.scheduled_date, [task]);
+          } else {
+            grouped.get(task.scheduled_date)?.push(task);
+          }
+        }
+        setGroupedTasks(grouped);
+        console.log(grouped);
+      } catch (error) {
+        console.error("Failed to fetch tasks", error);
+      }
+    };
+
+    fetchAndGroupTasks();
+  }, [accessToken]);
 
   return (
     <main className={`calendar-page ${selectedDay ? "has-detail" : ""}`}>
       <section className="calendar-card">
         <CalendarHeader />
-        <WeekView weekData={weekData} setSelectedDay={setSelectedDay} />
+        <WeekView weekData={groupedTasks} setSelectedDay={setSelectedDay} />
       </section>
       {selectedDay && <Detailed selectedDay={selectedDay} />}
     </main>
