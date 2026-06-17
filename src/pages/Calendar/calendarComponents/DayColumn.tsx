@@ -1,5 +1,5 @@
-import CalendarTaskCard from "./CalendarTaskCard";
 import type { Task } from "../../../types/taskTypes";
+import type { CSSProperties } from "react";
 
 type WeekDay = {
   day: string;
@@ -9,32 +9,22 @@ type WeekDay = {
 
 type DayColumnProps = {
   day: WeekDay;
+  columnIndex: number;
   onSelectedDay: (day: WeekDay) => void;
 };
 
-const DayColumn = ({ day, onSelectedDay }: DayColumnProps) => {
-  return (
-    <div className="day-column">
-      <div className="day-column-header">
-        <button className="day-select-btn" onClick={() => onSelectedDay(day)}>
-          {" "}
-          <span className="day-name">{day.day}</span>
-          <span className="day-date">{day.date}</span>
-        </button>{" "}
-      </div>
+const DayColumn = ({ day, columnIndex, onSelectedDay }: DayColumnProps) => {
+  const [, month, date] = day.date.split("-");
 
-      <div className="day-column-tasks">
-        {day.tasks.length > 0 ? (
-          day.tasks.map((task) => (
-            <CalendarTaskCard key={task.id} task={task} />
-          ))
-        ) : (
-          <div className="empty-day">
-            <span>No Tasks</span>
-          </div>
-        )}
-      </div>
-    </div>
+  return (
+    <button
+      className="day-column"
+      style={{ "--day-column": columnIndex } as CSSProperties}
+      onClick={() => onSelectedDay(day)}
+    >
+      <span className="day-name">{day.day.toUpperCase()}</span>
+      <span className="day-date">{Number(date || month)}</span>
+    </button>
   );
 };
 

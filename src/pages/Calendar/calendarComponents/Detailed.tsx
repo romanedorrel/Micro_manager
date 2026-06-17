@@ -1,4 +1,12 @@
 import type { Task } from "../../../types/taskTypes";
+import {
+  CalendarCheck,
+  CircleDot,
+  Clock3,
+  MapPin,
+  Pencil,
+  Trash2,
+} from "lucide-react";
 
 type WeekDay = {
   day: string;
@@ -7,33 +15,64 @@ type WeekDay = {
 };
 
 type DetailedProps = {
-  selectedDay: WeekDay;
+  selectedDay: WeekDay | null;
 };
 
 const Detailed = ({ selectedDay }: DetailedProps) => {
+  const featuredTask = selectedDay?.tasks[0];
+
   return (
     <aside className="detail-panel">
       <div className="detail-header">
-        <p className="detail-label">Selected Day</p>
-        <h2>{selectedDay.day}</h2>
-        <span>{selectedDay.date}</span>
+        <div>
+          <p className="detail-label">Selected Event</p>
+          <h2>{featuredTask?.title || "Plan the week"}</h2>
+          <span>{selectedDay?.date || "Choose a day to review details"}</span>
+        </div>
+        <div className="detail-actions">
+          <button aria-label="Edit event">
+            <Pencil size={15} />
+          </button>
+          <button aria-label="Delete event">
+            <Trash2 size={15} />
+          </button>
+        </div>
       </div>
 
       <div className="detail-section">
-        <h3>Today's Focus</h3>
+        <h3>Details</h3>
 
-        {selectedDay.tasks.length > 0 ? (
+        {selectedDay && selectedDay.tasks.length > 0 ? (
           selectedDay.tasks.map((task) => (
             <div className="detail-task-card" key={task.id}>
+              <CalendarCheck size={16} />
               <div>
                 <p>{task.title}</p>
-                {task.description && <span>{task.description}</span>}
+                <span>{task.description || "Scheduled focused work."}</span>
               </div>
             </div>
           ))
         ) : (
-          <p className="empty-detail-text">No tasks planned for this day.</p>
+          <p className="empty-detail-text">
+            Select a calendar block to see the tasks planned for that day.
+          </p>
         )}
+      </div>
+
+      <div className="detail-section">
+        <h3>Meta</h3>
+        <div className="detail-meta-row">
+          <Clock3 size={16} />
+          <span>{featuredTask?.estimated_duration || "Focus block"}</span>
+        </div>
+        <div className="detail-meta-row">
+          <MapPin size={16} />
+          <span>TrueNorth workspace</span>
+        </div>
+        <div className="detail-meta-row">
+          <CircleDot size={16} />
+          <span>{featuredTask?.status || "Scheduled"}</span>
+        </div>
       </div>
     </aside>
   );

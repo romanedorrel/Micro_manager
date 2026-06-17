@@ -8,7 +8,7 @@ const CalendarTaskCard = ({ task }: TaskCardProps) => {
   return (
     <article className="calendar-task-card">
       <p>{task.title}</p>
-      {task.status === "completed" && <span>Done</span>}
+      <span>{task.status === "completed" ? "Done" : "Scheduled"}</span>
     </article>
   );
 };

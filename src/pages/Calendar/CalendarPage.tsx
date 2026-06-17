@@ -48,12 +48,12 @@ const CalendarPage = () => {
   }, [accessToken]);
 
   return (
-    <main className={`calendar-page ${selectedDay ? "has-detail" : ""}`}>
+    <main className="calendar-page has-detail">
       <section className="calendar-card">
         <CalendarHeader />
         <WeekView weekData={groupedTasks} setSelectedDay={setSelectedDay} />
       </section>
-      {selectedDay && <Detailed selectedDay={selectedDay} />}
+      <Detailed selectedDay={selectedDay} />
     </main>
   );
 };
