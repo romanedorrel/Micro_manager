@@ -2,7 +2,7 @@ import {
   ChevronDown,
   ChevronLeft,
   ChevronRight,
-  Sprout,
+  Leaf,
 } from "lucide-react";
 
 const formatLocalDate = (date: Date) =>
@@ -24,7 +24,7 @@ const CalendarHeader = () => {
     <header className="calendar-header">
       <div className="calendar-heading">
         <h1>
-          Calendar <Sprout size={24} />
+          Calendar <Leaf size={24} />
         </h1>
       </div>
 

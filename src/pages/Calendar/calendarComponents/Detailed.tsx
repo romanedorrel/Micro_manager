@@ -3,10 +3,12 @@ import {
   CalendarCheck,
   CircleDot,
   Clock3,
+  Goal,
   MapPin,
   Pencil,
   Trash2,
 } from "lucide-react";
+import sagePlant from "../../../assets/sage_plant.png";
 
 type WeekDay = {
   day: string;
@@ -53,9 +55,10 @@ const Detailed = ({ selectedDay }: DetailedProps) => {
             </div>
           ))
         ) : (
-          <p className="empty-detail-text">
-            Select a calendar block to see the tasks planned for that day.
-          </p>
+          <div className="empty-detail-illustration">
+            <img src={sagePlant} alt="" />
+            <p>Select a calendar block to see the tasks planned for that day.</p>
+          </div>
         )}
       </div>
 
@@ -68,6 +71,10 @@ const Detailed = ({ selectedDay }: DetailedProps) => {
         <div className="detail-meta-row">
           <MapPin size={16} />
           <span>TrueNorth workspace</span>
+        </div>
+        <div className="detail-meta-row">
+          <Goal size={16} />
+          <span>Project A - Major progress</span>
         </div>
         <div className="detail-meta-row">
           <CircleDot size={16} />

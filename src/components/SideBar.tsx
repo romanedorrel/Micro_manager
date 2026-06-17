@@ -4,15 +4,16 @@ import { useAuth } from "../context/AuthContext";
 import {
   Calendar,
   Target,
-  User,
+  UserRound,
   Settings,
   LogOut,
   Menu,
-  Quote,
+  Leaf,
   House,
-  Sparkle,
+  Sparkles,
 } from "lucide-react";
 import QuotesCard from "./QuotesCard";
+import sagePlant from "../assets/sage_plant.png";
 
 const SideBar = () => {
   const [profileOpen, setProfileOpen] = useState(false);
@@ -25,7 +26,7 @@ const SideBar = () => {
       <div className="profile-section">
         <button onClick={toggleProfile} aria-label="Open profile menu">
           <div className="items-left">
-            <User size={18} />
+            <UserRound size={18} />
             <span>Profile</span>
           </div>
           <Menu size={18} />
@@ -39,7 +40,7 @@ const SideBar = () => {
             </li>
             <li>
               <Link to="/manageAccount">
-                <User size={14} /> <span>Manage Account</span>
+                <UserRound size={14} /> <span>Manage Account</span>
               </Link>
             </li>
           </ul>
@@ -75,7 +76,7 @@ const SideBar = () => {
           <li>
             <NavLink to="/scheduler" aria-label="AI Scheduler" title="AI Scheduler">
               <div className="items-left">
-                <Sparkle size={18} />
+                <Sparkles size={18} />
                 <span>AI Scheduler</span>
               </div>
             </NavLink>
@@ -89,8 +90,11 @@ const SideBar = () => {
           </li> */}
         </ul>
       </nav>
+      <div className="sidebar-plant" aria-hidden="true">
+        <img src={sagePlant} alt="" />
+      </div>
       <QuotesCard
-        icon={<Quote size={20} />}
+        icon={<Leaf size={20} />}
         quote="Small steps today create a calmer tomorrow."
       />
       <div>
