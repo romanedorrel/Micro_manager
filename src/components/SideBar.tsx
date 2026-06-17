@@ -23,7 +23,7 @@ const SideBar = () => {
   return (
     <div className="sidebar">
       <div className="profile-section">
-        <button onClick={toggleProfile}>
+        <button onClick={toggleProfile} aria-label="Open profile menu">
           <div className="items-left">
             <User size={18} />
             <span>Profile</span>
@@ -45,25 +45,27 @@ const SideBar = () => {
           </ul>
         )}
       </div>
-      <h2>TrueNorth</h2>
+      <h2>
+        <span>TrueNorth</span>
+      </h2>
       <nav>
         <ul>
           <li>
-            <NavLink to="/today">
+            <NavLink to="/today" aria-label="Today" title="Today">
               <div className="items-left">
                 <House size={18} /> <span>Today</span>
               </div>
             </NavLink>
           </li>
           <li>
-            <NavLink to="/goals">
+            <NavLink to="/goals" aria-label="Goals" title="Goals">
               <div className="items-left">
                 <Target size={18} /> <span>Goals</span>
               </div>
             </NavLink>
           </li>
           <li>
-            <NavLink to="/calendarpage">
+            <NavLink to="/calendarpage" aria-label="Calendar" title="Calendar">
               <div className="items-left">
                 <Calendar size={18} />
                 <span>Calendar</span>
@@ -71,7 +73,7 @@ const SideBar = () => {
             </NavLink>
           </li>
           <li>
-            <NavLink to="/scheduler">
+            <NavLink to="/scheduler" aria-label="AI Scheduler" title="AI Scheduler">
               <div className="items-left">
                 <Sparkle size={18} />
                 <span>AI Scheduler</span>

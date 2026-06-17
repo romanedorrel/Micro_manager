@@ -280,3 +280,50 @@
   margin: 0;
   color: var(--text-secondary);
 }
+
+@media (max-width: 760px) {
+  .goal-tabs {
+    display: flex;
+    width: 100%;
+  }
+
+  .goal-tabs button {
+    min-width: 0;
+    flex: 1;
+  }
+
+  .goals-content,
+  .goal_detail_header {
+    width: 100%;
+  }
+
+  .task-card-header,
+  .task-actions {
+    flex-wrap: wrap;
+  }
+}
+
+@media (max-width: 520px) {
+  .goals-content .goal-card,
+  .completed-goal-card,
+  .goal_detail_header,
+  .generated-tasks {
+    padding: 14px;
+    border-radius: 16px;
+  }
+
+  .task-card-header {
+    flex-direction: column;
+  }
+
+  .task-status {
+    align-self: flex-start;
+  }
+
+  .task-actions button,
+  .task-form button,
+  .goal_detail_header > button {
+    width: 100%;
+    justify-content: center;
+  }
+}

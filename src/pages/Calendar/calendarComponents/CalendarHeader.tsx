@@ -1,3 +1,11 @@
+import {
+  ChevronDown,
+  ChevronLeft,
+  ChevronRight,
+  Plus,
+  SlidersHorizontal,
+} from "lucide-react";
+
 const CalendarHeader = () => {
   return (
     <header className="calendar-header">
@@ -11,16 +19,26 @@ const CalendarHeader = () => {
         </div>
 
         <div className="calendar-date-controls">
-          <button className="calendar-icon-btn">‹</button>
+          <button className="calendar-icon-btn" aria-label="Previous week">
+            <ChevronLeft size={17} />
+          </button>
           <button className="calendar-today-btn">Today</button>
-          <button className="calendar-icon-btn">›</button>
+          <button className="calendar-icon-btn" aria-label="Next week">
+            <ChevronRight size={17} />
+          </button>
         </div>
 
         <p className="calendar-range">May 18 – May 24, 2025</p>
-        <div>
-          {" "}
-          <button className="new-goal-btn">+ New Goal</button>
-          <button className="goal-filter-btn">All Goals ˅</button>
+        <div className="calendar-actions">
+          <button className="new-goal-btn">
+            <Plus size={16} />
+            <span>New Goal</span>
+          </button>
+          <button className="goal-filter-btn">
+            <SlidersHorizontal size={16} />
+            <span>All Goals</span>
+            <ChevronDown size={16} />
+          </button>
         </div>
       </div>
     </header>
