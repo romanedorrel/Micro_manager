@@ -1,7 +1,7 @@
 import "./App.css";
 import SideBar from "./components/SideBar";
 import { Navigate, Routes, Route } from "react-router-dom";
-import Today from "./pages/Today";
+import Today from "./pages/Today/Today";
 import Settings from "./pages/Profile/Settings";
 import AccountManagement from "./pages/Profile/AccountManagement";
 import CalendarPage from "./pages/Calendar/CalendarPage";

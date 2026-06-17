@@ -35,6 +35,14 @@ const AddGoalForm = () => {
     );
   };
 
+  const formatLocalDate = (date: Date) => {
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, "0");
+    const day = String(date.getDate()).padStart(2, "0");
+
+    return `${year}-${month}-${day}`;
+  };
+
   // Evenly distribute generated tasks between today and the goal deadline
   // while preserving their original order.
   const scheduleTasks = (tasks: GeneratedTask[], deadline: string) => {
@@ -52,7 +60,7 @@ const AddGoalForm = () => {
 
       return {
         ...task,
-        scheduled_date: scheduledDate.toISOString().split("T")[0],
+        scheduled_date: formatLocalDate(scheduledDate),
       };
     });
   };

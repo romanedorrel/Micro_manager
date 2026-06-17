@@ -1,19 +1,36 @@
 import { useState, useEffect } from "react";
-import TodoCard from "../components/TodoCard";
-import { getTasks, updateTask } from "../services/tasksApi";
-import type { Task } from "../types/taskTypes";
-import { useAuth } from "../context/AuthContext";
-
+import TodoCard from "../../components/TodoCard";
+import { getTasks, updateTask } from "../../services/tasksApi";
+import type { Task } from "../../types/taskTypes";
+import { useAuth } from "../../context/AuthContext";
+import FocusCard from "./TodayComponents/FocusCard";
+import FocusTip from "./TodayComponents/FocusTip";
 const Today = () => {
   const [tasks, setTasks] = useState<Task[]>([]);
   const { accessToken } = useAuth();
 
-  const today = new Date().toLocaleDateString("en-US", {
+  const displayDate = new Date().toLocaleDateString("en-US", {
     weekday: "long",
     month: "long",
     day: "numeric",
     year: "numeric",
   });
+
+  const hour = new Date().getHours();
+
+  const greeting =
+    hour < 12 ? "Good Morning" : hour < 18 ? "Good Afternoon" : "Good Evening";
+  const todayDate = new Date().toISOString().split("T")[0];
+
+  const todayTasks = tasks.filter((task) => task.scheduled_date === todayDate);
+  const focusTask = todayTasks[0];
+
+  const upcomingTask = tasks.find(
+    (task) =>
+      task.scheduled_date &&
+      task.scheduled_date > todayDate &&
+      task.status === "pending",
+  );
 
   const handleCheck = async (task: Task) => {
     if (!accessToken) return;
@@ -50,11 +67,12 @@ const Today = () => {
     <>
       <div>
         {" "}
-        <h2>Today</h2>
-        <p>{today}</p>
+        <h2>{greeting}, Romane</h2>
+        <p>{displayDate}</p>
+        <FocusCard task={focusTask} />
         <div className="outer-container">
-          {tasks.map((task) => {
-            return (
+          {todayTasks.length > 0 ? (
+            todayTasks.map((task) => (
               <TodoCard
                 key={task.id}
                 id={task.id}
@@ -64,9 +82,18 @@ const Today = () => {
                 checked={task.status === "completed"}
                 onCheck={() => handleCheck(task)}
               />
-            );
-          })}
+            ))
+          ) : (
+            <p>No tasks available for today.</p>
+          )}
         </div>
+        <aside className="today-sidebar">
+          <FocusTip />
+          <div className="up-next">
+            <h3>Up Next</h3>
+            <p>{upcomingTask?.title || "You're all caught up."}</p>
+          </div>
+        </aside>
       </div>
     </>
   );

@@ -12,6 +12,14 @@ type WeekGridProps = {
   onSelectedDay: (day: WeekDay) => void;
 };
 
+const formatLocalDate = (date: Date) => {
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, "0");
+  const day = String(date.getDate()).padStart(2, "0");
+
+  return `${year}-${month}-${day}`;
+};
+
 // Creates an array representing the current week (7 days).
 // Each day starts with an empty tasks array that will be populated later.
 const getCurrentWeek = (): WeekDay[] => {
@@ -36,7 +44,7 @@ const getCurrentWeek = (): WeekDay[] => {
       // Return the day information in readable format such as "Mon", "Tue", etc.
       day: date.toLocaleDateString("en-US", { weekday: "short" }),
       //Format date to match schedule_date format.
-      date: date.toISOString().split("T")[0],
+      date: formatLocalDate(date),
       // Initialize tasks array. tasks are populated later.
       tasks: [],
     };

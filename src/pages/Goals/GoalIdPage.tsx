@@ -38,6 +38,14 @@ const GoalIdPage = () => {
   const { accessToken } = useAuth();
   const navigate = useNavigate();
 
+  const formatLocalDate = (date: Date) => {
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, "0");
+    const day = String(date.getDate()).padStart(2, "0");
+
+    return `${year}-${month}-${day}`;
+  };
+
   // Evenly distribute generated tasks between today and the goal deadline
   // while preserving their original order.
   const scheduleTasks = (tasks: GeneratedTask[], deadline: string) => {
@@ -55,7 +63,7 @@ const GoalIdPage = () => {
 
       return {
         ...task,
-        scheduled_date: scheduledDate.toISOString().split("T")[0],
+        scheduled_date: formatLocalDate(scheduledDate),
       };
     });
   };
@@ -168,6 +176,7 @@ const GoalIdPage = () => {
 
     try {
       const scheduledTasks = scheduleTasks(generatedTasks, goal.deadline);
+      await Promise.all(tasks.map((task) => deleteTask(task.id, accessToken)));
       const savedTasks = await Promise.all(
         scheduledTasks.map((task) =>
           createTask(

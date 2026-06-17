@@ -9,6 +9,11 @@ const GoalCard = ({ goal, onClick }: GoalCardProps) => {
   const icon =
     goal.priority === "high" ? "🔥" : goal.priority === "medium" ? "📌" : "🎯";
 
+  const formatDateDisplay = (dateString: string) => {
+    const [year, month, day] = dateString.split("-");
+
+    return `${month}/${day}/${year}`;
+  };
   return (
     <button type="button" className="goal-card" onClick={onClick}>
       <div className="goal-card-header">
@@ -24,9 +29,7 @@ const GoalCard = ({ goal, onClick }: GoalCardProps) => {
       </div>
 
       <div className="goal-card-meta">
-        {goal.deadline && (
-          <span>Due {new Date(goal.deadline).toLocaleDateString()}</span>
-        )}
+        {goal.deadline && <span>Due {formatDateDisplay(goal.deadline)}</span>}
 
         {goal.priority && <span>{goal.priority} priority</span>}
 
