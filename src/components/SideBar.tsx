@@ -45,7 +45,7 @@ const SideBar = () => {
           </ul>
         )}
       </div>
-      <h2>AI-Scheduler</h2>
+      <h2>TrueNorth</h2>
       <nav>
         <ul>
           <li>
@@ -89,7 +89,7 @@ const SideBar = () => {
       </nav>
       <QuotesCard
         icon={<Quote size={20} />}
-        quote="Stay consistent. Small daily actions lead to massive progress."
+        quote="Small steps today create a calmer tomorrow."
       />
       <div>
         <button

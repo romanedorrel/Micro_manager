@@ -251,7 +251,7 @@ const AddGoalForm = () => {
             className="primary-btn"
             disabled={isSaving || !title.trim() || !deadline}
           >
-            {isSaving ? "Generating..." : "Generate Plan"}
+            {isSaving ? "Generating..." : "Generate Suggestions"}
           </button>
         </div>
       </section>

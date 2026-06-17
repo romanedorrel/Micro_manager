@@ -14,10 +14,8 @@
 .detail-panel {
   border: 1px solid var(--border-color);
   border-radius: var(--radius-primary);
-  background:
-    radial-gradient(circle at 10% 0%, rgba(63, 191, 127, 0.11), transparent 32%),
-    linear-gradient(155deg, rgba(16, 24, 22, 0.94), rgba(7, 10, 9, 0.96));
-  box-shadow: var(--shadow-elevated);
+  background: rgba(252, 252, 250, 0.92);
+  box-shadow: var(--shadow-soft);
 }
 
 .calendar-card {
@@ -49,7 +47,7 @@
   padding: 4px;
   border: 1px solid var(--border-color);
   border-radius: 999px;
-  background: rgba(7, 9, 8, 0.5);
+  background: rgba(247, 248, 244, 0.78);
 }
 
 .calendar-actions {
@@ -68,7 +66,7 @@
   min-height: 36px;
   border: 1px solid var(--border-color);
   border-radius: 999px;
-  background: rgba(255, 255, 255, 0.035);
+  background: rgba(252, 252, 250, 0.76);
   color: var(--text-secondary);
   font: inherit;
   font-weight: 750;
@@ -101,15 +99,15 @@
 .today-btn:hover {
   border-color: var(--accent-primary-tint-strong);
   background: var(--accent-soft);
-  color: var(--accent-primary-hover);
+  color: var(--sage-700);
   transform: translateY(-1px);
 }
 
 .calendar-tab.active,
 .new-goal-btn,
 .today-btn {
-  border-color: rgba(63, 191, 127, 0.35);
-  background: linear-gradient(135deg, var(--accent-primary), #2f8f60);
+  border-color: var(--sage-700);
+  background: var(--accent-primary);
   color: var(--text-on-dark);
 }
 
@@ -136,7 +134,7 @@
 .week-label,
 .detail-label {
   margin: 0 0 4px;
-  color: var(--accent-primary-hover);
+  color: var(--sage-700);
   font-size: var(--font-size-xs);
   font-weight: 800;
   text-transform: uppercase;
@@ -166,9 +164,7 @@
   padding: 12px;
   border: 1px solid rgba(89, 113, 100, 0.26);
   border-radius: 14px;
-  background:
-    linear-gradient(180deg, rgba(63, 191, 127, 0.07), rgba(63, 191, 127, 0.01)),
-    rgba(7, 9, 8, 0.38);
+  background: rgba(247, 248, 244, 0.72);
   transition:
     border-color var(--transition-fast),
     box-shadow var(--transition-fast),
@@ -252,7 +248,7 @@
   place-items: center;
   border: 1px dashed rgba(89, 113, 100, 0.38);
   border-radius: 12px;
-  background: rgba(255, 255, 255, 0.025);
+  background: rgba(252, 252, 250, 0.54);
   color: var(--text-muted);
   font-size: var(--font-size-sm);
 }
@@ -262,8 +258,8 @@
   padding: 10px;
   border: 1px solid rgba(89, 113, 100, 0.24);
   border-radius: 12px;
-  background: rgba(16, 24, 22, 0.84);
-  box-shadow: var(--shadow-primary);
+  background: rgba(252, 252, 250, 0.86);
+  box-shadow: var(--shadow-soft);
   cursor: pointer;
   transition:
     transform var(--transition-fast),
@@ -271,7 +267,7 @@
 }
 
 .calendar-page .task-card:hover {
-  box-shadow: var(--shadow-elevated);
+  box-shadow: var(--shadow-primary);
   transform: translateY(-2px);
 }
 
@@ -357,7 +353,7 @@
   padding: 10px;
   border: 1px solid rgba(89, 113, 100, 0.24);
   border-radius: 12px;
-  background: rgba(7, 9, 8, 0.38);
+  background: rgba(247, 248, 244, 0.74);
 }
 
 .detail-task-card p {
@@ -369,7 +365,7 @@
   margin: 0;
   padding: 12px;
   border-radius: 12px;
-  background: rgba(255, 255, 255, 0.035);
+  background: rgba(247, 248, 244, 0.74);
   font-size: var(--font-size-sm);
 }
 

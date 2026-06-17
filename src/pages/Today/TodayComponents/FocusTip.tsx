@@ -1,11 +1,11 @@
 import { useMemo } from "react";
 
 const focusTips = [
-  "Small steps still move you forward.",
+  "Small progress still counts. Start with the next clear step.",
   "Progress matters more than perfection.",
   "Start where you are. Momentum will follow.",
   "Future you will be grateful you began today.",
-  "You don't have to finish everything—just the next step.",
+  "You don't have to finish everything, just the next step.",
   "Consistency beats intensity.",
   "Done is better than waiting for perfect.",
 ];

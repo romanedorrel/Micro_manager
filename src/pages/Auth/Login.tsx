@@ -17,17 +17,17 @@ const Login = () => {
     try {
       const data = await logIn({ email, password });
       setAccessToken(data.access_token);
-      setUserMessage("Successful LogIn");
+      setUserMessage("Welcome back.");
 
       navigate("/today");
     } catch {
-      setUserMessage("Username or Password Incorrect");
+      setUserMessage("We couldn't find that email and password.");
     }
   };
   return (
     <div className="auth-page">
       <section className="auth-hero">
-        <p className="auth-label">AI Scheduler</p>
+        <p className="auth-label">TrueNorth</p>
         <h1>Start with the right task.</h1>
         <p>
           A calm planning system that helps you turn goals into focused daily
@@ -56,7 +56,7 @@ const Login = () => {
         </form>
 
         <p className="auth-switch">
-          Dont have an account? <Link to="/signup">Create one</Link>
+          Don't have an account? <Link to="/signup">Create one</Link>
         </p>
         {userMessage && <p className="auth-message">{userMessage}</p>}
       </section>

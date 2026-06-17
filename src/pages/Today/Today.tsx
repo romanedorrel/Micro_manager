@@ -65,33 +65,42 @@ const Today = () => {
 
   return (
     <>
-      <div>
-        {" "}
-        <h2>{greeting}, Romane</h2>
-        <p>{displayDate}</p>
-        <FocusCard task={focusTask} />
-        <div className="outer-container">
-          {todayTasks.length > 0 ? (
-            todayTasks.map((task) => (
-              <TodoCard
-                key={task.id}
-                id={task.id}
-                time=""
-                task={task.title}
-                category="General"
-                checked={task.status === "completed"}
-                onCheck={() => handleCheck(task)}
-              />
-            ))
-          ) : (
-            <p>No tasks available for today.</p>
-          )}
-        </div>
+      <div className="today-page">
+        <header className="today-header">
+          <h2>{greeting}, Romane</h2>
+          <p>{displayDate}</p>
+        </header>
+        <section className="today-main">
+          <FocusCard task={focusTask} />
+          <div className="outer-container">
+            <h3>Today's Plan</h3>
+            {todayTasks.length > 0 ? (
+              todayTasks.map((task) => (
+                <TodoCard
+                  key={task.id}
+                  id={task.id}
+                  time=""
+                  task={task.title}
+                  category="General"
+                  checked={task.status === "completed"}
+                  onCheck={() => handleCheck(task)}
+                />
+              ))
+            ) : (
+              <p className="empty-state">
+                No tasks planned for today. One step at a time.
+              </p>
+            )}
+          </div>
+        </section>
         <aside className="today-sidebar">
           <FocusTip />
           <div className="up-next">
-            <h3>Up Next</h3>
-            <p>{upcomingTask?.title || "You're all caught up."}</p>
+            <h3>Upcoming</h3>
+            <p>
+              {upcomingTask?.title ||
+                "You're all caught up. Small progress still counts."}
+            </p>
           </div>
         </aside>
       </div>

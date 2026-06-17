@@ -15,18 +15,18 @@ const SignUp = () => {
     try {
       const data = await signUp({ email, password });
       console.log("Account created:", data);
-      setUserMessage("Account created");
+      setUserMessage("Your account is ready.");
 
       navigate("/login");
     } catch {
-      setUserMessage("Sign up Failed");
+      setUserMessage("We couldn't create the account yet.");
     }
   };
 
   return (
     <div className="auth-page">
       <section className="auth-hero">
-        <p className="auth-label">AI Scheduler</p>
+        <p className="auth-label">TrueNorth</p>
         <h1>Start with the next right task.</h1>
         <p>
           A calm planning system that helps you turn goals into focused daily
@@ -35,8 +35,8 @@ const SignUp = () => {
       </section>
 
       <section className="auth-card">
-        <h2>Create your Account</h2>
-        <p>Start building your daily system.</p>
+        <h2>Create your account</h2>
+        <p>Start with one calm plan.</p>
 
         <form className="auth-form" onSubmit={handleSignUp}>
           <input

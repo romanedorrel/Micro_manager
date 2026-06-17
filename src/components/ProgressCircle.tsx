@@ -24,7 +24,7 @@ const ProgressCircle = ({ progress }: ProgressCircleProps) => {
             {progress}%
           </tspan>
           <tspan x="58" dy="18" className="progress-label">
-            Complete
+            Done
           </tspan>
         </text>
       </svg>

@@ -1,45 +1,50 @@
 :root {
-  --bg-primary: #070908;
-  --bg-secondary: #0b1110;
-  --bg-elevated: #101816;
-  --bg-soft: #17231e;
-  --bg-muted: rgba(23, 35, 30, 0.72);
+  --background: #f7f8f4;
+  --surface: #fcfcfa;
+  --surface-warm: #f1f3ed;
 
-  --text-primary: #f4f7f2;
-  --text-secondary: #b7c2b8;
-  --text-muted: #7f8b83;
-  --text-on-dark: #f4f7f2;
-  --text-on-dark-secondary: #b7c2b8;
+  --sage-100: #e7ece4;
+  --sage-200: #dce5d8;
+  --sage-300: #b7c3b2;
+  --sage-500: #7d9277;
+  --sage-700: #5e6e5a;
 
-  --border-color: rgba(89, 113, 100, 0.34);
-  --border-shell: rgba(89, 113, 100, 0.28);
+  --text-primary: #2f3b31;
+  --text-secondary: #6f786f;
+  --text-muted: #8b948a;
+  --text-on-dark: #fcfcfa;
+  --text-on-dark-secondary: #eef3eb;
 
-  --accent-primary: #3fbf7f;
-  --accent-primary-hover: #55d995;
-  --accent-soft: rgba(63, 191, 127, 0.14);
-  --accent-primary-tint: rgba(63, 191, 127, 0.13);
-  --accent-primary-tint-strong: rgba(63, 191, 127, 0.34);
-  --accent-success: #58b987;
-  --accent-success-tint: rgba(88, 185, 135, 0.14);
-  --accent-warning: #d6a84f;
-  --accent-danger: #f26d6d;
+  --border-color: #dce2d8;
+  --border-shell: rgba(94, 110, 90, 0.24);
 
-  --priority-high: #f26d6d;
-  --priority-medium: #d6a84f;
-  --priority-low: #58b987;
+  --accent-primary: var(--sage-700);
+  --accent-primary-hover: #53634f;
+  --accent-soft: rgba(183, 195, 178, 0.26);
+  --accent-primary-tint: rgba(125, 146, 119, 0.16);
+  --accent-primary-tint-strong: rgba(125, 146, 119, 0.34);
+  --accent-success: #6f856b;
+  --accent-success-tint: rgba(125, 146, 119, 0.16);
+  --accent-warning: #b99854;
+  --accent-danger: #b46b61;
 
-  --effort-large: #d97c5f;
-  --effort-medium: #d6a84f;
-  --effort-small: #58b987;
+  --priority-high: #b46b61;
+  --priority-medium: #b99854;
+  --priority-low: #6f856b;
 
-  --ai-bg: #13201b;
-  --ai-border: rgba(63, 191, 127, 0.44);
-  --ai-glow: rgba(63, 191, 127, 0.18);
+  --effort-large: #b46b61;
+  --effort-medium: #b99854;
+  --effort-small: #6f856b;
 
-  --radius-primary: 16px;
-  --radius-secondary: 10px;
-  --shadow-primary: 0 12px 28px rgba(0, 0, 0, 0.28);
-  --shadow-elevated: 0 22px 50px rgba(0, 0, 0, 0.36);
+  --ai-bg: #eef3eb;
+  --ai-border: rgba(125, 146, 119, 0.42);
+  --ai-glow: rgba(125, 146, 119, 0.18);
+
+  --radius-primary: 20px;
+  --radius-secondary: 12px;
+  --shadow-soft: 0 8px 24px rgba(47, 59, 49, 0.08);
+  --shadow-primary: var(--shadow-soft);
+  --shadow-elevated: 0 18px 42px rgba(47, 59, 49, 0.12);
   --transition-fast: 160ms ease;
 
   --font-size-xs: 0.78rem;
@@ -54,7 +59,7 @@
 
 html {
   min-height: 100%;
-  background: var(--bg-primary);
+  background: var(--background);
 }
 
 body {
@@ -62,17 +67,8 @@ body {
   min-height: 100vh;
   margin: 0;
   background:
-    radial-gradient(
-      circle at 18% 8%,
-      rgba(63, 191, 84, 0.778),
-      transparent 30%
-    ),
-    radial-gradient(
-      circle at 88% 78%,
-      rgba(63, 191, 84, 0.778),
-      transparent 26%
-    ),
-    linear-gradient(145deg, #14201a 0%, #162a23 48%, #0e251a 100%);
+    linear-gradient(135deg, rgba(231, 236, 228, 0.86), transparent 34%),
+    linear-gradient(180deg, var(--background) 0%, #f2f4ef 100%);
   color: var(--text-primary);
   font-family:
     Inter,
@@ -105,19 +101,27 @@ a {
   color: inherit;
 }
 
+button,
+input,
+select,
+textarea {
+  transition:
+    border-color var(--transition-fast),
+    box-shadow var(--transition-fast),
+    background-color var(--transition-fast),
+    color var(--transition-fast),
+    transform var(--transition-fast);
+}
+
 input,
 select,
 textarea {
   width: 100%;
   border: 1px solid var(--border-color);
   border-radius: var(--radius-secondary);
-  background: rgba(7, 9, 8, 0.68);
+  background: rgba(252, 252, 250, 0.86);
   color: var(--text-primary);
   outline: none;
-  transition:
-    border-color var(--transition-fast),
-    box-shadow var(--transition-fast),
-    background-color var(--transition-fast);
 }
 
 input,
@@ -140,8 +144,8 @@ textarea::placeholder {
 input:focus,
 select:focus,
 textarea:focus {
-  border-color: var(--accent-primary);
-  background: rgba(10, 16, 14, 0.92);
+  border-color: var(--sage-500);
+  background: var(--surface);
   box-shadow: 0 0 0 3px var(--ai-glow);
 }
 

@@ -11,7 +11,7 @@ const CompletedCard = ({ goal, onClick }: CompletedCardProps) => {
         <h3>
           <CheckIcon size={20} />
           <span>{goal.title}</span>
-          <span className="completed-goal-badge">Completed</span>
+          <span className="completed-goal-badge">Done</span>
         </h3>
 
         {goal.description && (
