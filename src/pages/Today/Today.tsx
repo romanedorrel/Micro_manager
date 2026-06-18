@@ -5,6 +5,7 @@ import type { Task } from "../../types/taskTypes";
 import { useAuth } from "../../context/AuthContext";
 import FocusCard from "./TodayComponents/FocusCard";
 import FocusTip from "./TodayComponents/FocusTip";
+import { CalendarDays } from "lucide-react";
 const Today = () => {
   const [tasks, setTasks] = useState<Task[]>([]);
   const { accessToken } = useAuth();
@@ -96,11 +97,18 @@ const Today = () => {
         <aside className="today-sidebar">
           <FocusTip />
           <div className="up-next">
-            <h3>Upcoming</h3>
-            <p>
-              {upcomingTask?.title ||
-                "You're all caught up. Small progress still counts."}
-            </p>
+            <div className="up-next-header">
+              <h3>Upcoming</h3>
+              <span>View all</span>
+            </div>
+            <div className="up-next-item">
+              <span className="up-next-date">Tomorrow</span>
+              <p>
+                {upcomingTask?.title ||
+                  "You're all caught up. Small progress still counts."}{" "}
+                <CalendarDays size={18} />
+              </p>
+            </div>
           </div>
         </aside>
       </div>
