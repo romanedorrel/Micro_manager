@@ -1,5 +1,5 @@
 import { useMemo } from "react";
-import { Leaf } from "lucide-react";
+import { Sparkle } from "lucide-react";
 const focusTips = [
   "Small progress still counts. Start with the next clear step.",
   "Progress matters more than perfection.",
@@ -19,7 +19,7 @@ const FocusTip = () => {
   return (
     <div className="focus-tip">
       <div className="focus-tip-header">
-        <Leaf size={22} />
+        <Sparkle size={22} />
         <h3>Focus Tip</h3>
       </div>
       <p>{tip}</p>

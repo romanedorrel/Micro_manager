@@ -7,7 +7,9 @@ export const signUpUser = async (req: Request, res: Response) => {
   try {
     const { email, password } = req.body;
     const user = await authService.signUpUser(email, password);
-    res.status(201).json(user);
+    res
+      .status(201)
+      .json({ message: "Verify your email to complete signup", user });
   } catch (e) {
     if (e instanceof Error) {
       return res.status(500).json({ message: e.message });

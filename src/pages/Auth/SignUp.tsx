@@ -1,13 +1,12 @@
 import { useState } from "react";
 import { signUp } from "../../services/authApi";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import "./auth.css";
 
 const SignUp = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [userMessage, setUserMessage] = useState("");
-  const navigate = useNavigate();
 
   const handleSignUp = async (e: React.SubmitEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -15,11 +14,16 @@ const SignUp = () => {
     try {
       const data = await signUp({ email, password });
       console.log("Account created:", data);
-      setUserMessage("Your account is ready.");
+      setUserMessage(data.message);
 
-      navigate("/login");
-    } catch {
-      setUserMessage("We couldn't create the account yet.");
+      setEmail("");
+      setPassword("");
+    } catch (error) {
+      if (error instanceof Error) {
+        setUserMessage(error.message);
+      } else {
+        setUserMessage("We couldn't create the account yet.");
+      }
     }
   };
 

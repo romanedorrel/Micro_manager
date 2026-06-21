@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { logIn } from "../../services/authApi";
 import { useAuth } from "../../context/AuthContext";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import "./auth.css";
 
 const Login = () => {
@@ -10,7 +10,9 @@ const Login = () => {
   const [userMessage, setUserMessage] = useState("");
   const navigate = useNavigate();
   const { setAccessToken } = useAuth();
+  const [searchParams] = useSearchParams();
 
+  const emailVerified = searchParams.get("verified") === "true";
   const handleLogIn = async (e: React.SubmitEvent<HTMLFormElement>) => {
     e.preventDefault();
     setUserMessage("");
@@ -19,7 +21,7 @@ const Login = () => {
       setAccessToken(data.access_token);
       setUserMessage("Welcome back.");
 
-      navigate("/today");
+      navigate("/today", { replace: true });
     } catch {
       setUserMessage("We couldn't find that email and password.");
     }
@@ -38,7 +40,11 @@ const Login = () => {
       <section className="auth-card">
         <h2>Welcome back</h2>
         <p>Log in to continue your plan.</p>
-
+        {emailVerified && (
+          <p className="success-message">
+            Email verified successfully. You can now log in.
+          </p>
+        )}
         <form className="auth-form" onSubmit={handleLogIn}>
           <input
             type="email"
