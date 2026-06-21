@@ -7,10 +7,15 @@ const SignUp = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [userMessage, setUserMessage] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
 
   const handleSignUp = async (e: React.SubmitEvent<HTMLFormElement>) => {
     e.preventDefault();
     setUserMessage("");
+    if (password !== confirmPassword) {
+      setUserMessage("Passwords do not match.");
+      return;
+    }
     try {
       const data = await signUp({ email, password });
       console.log("Account created:", data);
@@ -18,6 +23,7 @@ const SignUp = () => {
 
       setEmail("");
       setPassword("");
+      setConfirmPassword("");
     } catch (error) {
       if (error instanceof Error) {
         setUserMessage(error.message);
@@ -54,6 +60,12 @@ const SignUp = () => {
             placeholder="Password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
+          />
+          <input
+            type="password"
+            placeholder="Confirm Password"
+            value={confirmPassword}
+            onChange={(e) => setConfirmPassword(e.target.value)}
           />
           <button type="submit">Create Account</button>
         </form>

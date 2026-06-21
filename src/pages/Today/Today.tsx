@@ -68,7 +68,7 @@ const Today = () => {
     <>
       <div className="today-page">
         <header className="today-header">
-          <h2>{greeting}, Romane</h2>
+          <h2>{greeting}</h2>
           <p>{displayDate}</p>
         </header>
         <section className="today-main">
