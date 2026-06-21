@@ -1,3 +1,4 @@
+/// <reference types="node" />
 import { Page } from "@playwright/test";
 
 export async function login(page: Page) {
