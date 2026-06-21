@@ -122,7 +122,7 @@ const AddGoalForm = () => {
           Goal Name
           <input
             type="text"
-            placeholder="Become a Junior Software Engineer"
+            placeholder="What is your goal?"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
           />
