@@ -18,7 +18,6 @@ const Hero = () => {
       <p>
         Already have an account? <a href="/login">Log in</a>
       </p>
-      {/* <img src={MountainHero} alt="not yet" className="hero-image" /> */}
     </div>
   );
 };

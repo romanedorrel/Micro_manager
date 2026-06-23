@@ -1,7 +1,5 @@
-import React from "react";
-
 const Footer = () => {
-  return <div className="footer"> 2026 TrueNorth</div>;
+  return <div className="footer"> © {new Date().getFullYear()} TrueNorth</div>;
 };
 
 export default Footer;

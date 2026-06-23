@@ -1,12 +1,11 @@
-import { Mountain } from "lucide-react";
 import { Link } from "react-router-dom";
+import logoNav from "../../../assets/logo-nav-transparent.png";
 
 const NavBar = () => {
   return (
     <div className="navbar">
       <div className="logo">
-        <Mountain size={32} />
-        <h2>TrueNorth</h2>
+        <img src={logoNav} alt="TrueNorth Logo" />
       </div>
       <ul>
         <li className="navbar-secondary">
