@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { signUp } from "../../services/authApi";
+import { supabase } from "../../lib/supabaseClient";
 import { Link } from "react-router-dom";
 import "./auth.css";
 
@@ -16,21 +16,22 @@ const SignUp = () => {
       setUserMessage("Passwords do not match.");
       return;
     }
-    try {
-      const data = await signUp({ email, password });
-      console.log("Account created:", data);
-      setUserMessage(data.message);
+    const { data, error } = await supabase.auth.signUp({
+      email,
+      password,
+      options: {
+        emailRedirectTo: `${window.location.origin}/auth/callback`,
+      },
+    });
+    console.log(error);
+    console.log(data);
 
-      setEmail("");
-      setPassword("");
-      setConfirmPassword("");
-    } catch (error) {
-      if (error instanceof Error) {
-        setUserMessage(error.message);
-      } else {
-        setUserMessage("We couldn't create the account yet.");
-      }
+    if (error) {
+      setUserMessage(error.message);
+      return;
     }
+
+    setUserMessage("Check your email to verify your account.");
   };
 
   return (
@@ -73,8 +74,8 @@ const SignUp = () => {
         <p className="auth-switch">
           Already have an account? <Link to="/login"> Log In</Link>
         </p>
+        {userMessage && <p className="auth-message">{userMessage}</p>}
       </section>
-      {userMessage && <p className="auth-message">{userMessage}</p>}
     </div>
   );
 };

@@ -1,37 +1,40 @@
 import { useState, useEffect, type ReactNode } from "react";
 import { AuthContext } from "./AuthContext";
-import { refreshSession, logOut } from "../services/authApi";
-import { useLocation } from "react-router-dom";
+import { supabase } from "../lib/supabaseClient";
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [accessToken, setAccessToken] = useState<string | null>(null);
   const [authLoading, setAuthLoading] = useState(true);
-  const location = useLocation();
 
   const logout = async () => {
-    await logOut();
+    await supabase.auth.signOut();
     setAccessToken(null);
   };
-  const publicRoutes = ["/login", "/signup"];
-
-  const isPublicRoute = publicRoutes.includes(location.pathname);
 
   useEffect(() => {
-    if (isPublicRoute) return;
-
-    const restoreSession = async () => {
+    const initializeAuth = async () => {
       setAuthLoading(true);
-      try {
-        const data = await refreshSession();
-        setAccessToken(data.access_token);
-      } catch {
-        setAccessToken(null);
-      } finally {
-        setAuthLoading(false);
-      }
+
+      const {
+        data: { session },
+      } = await supabase.auth.getSession();
+
+      setAccessToken(session?.access_token ?? null);
+
+      setAuthLoading(false);
     };
-    restoreSession();
-  }, [isPublicRoute]);
+
+    initializeAuth();
+
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange((_event, session) => {
+      setAccessToken(session?.access_token ?? null);
+      setAuthLoading(false);
+    });
+
+    return () => subscription.unsubscribe();
+  }, []);
 
   const isAuthenticated = !!accessToken;
 
