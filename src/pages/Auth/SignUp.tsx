@@ -70,11 +70,10 @@ const SignUp = () => {
           />
           <button type="submit">Create Account</button>
         </form>
-
+        {userMessage && <p className="auth-message">{userMessage}</p>}
         <p className="auth-switch">
           Already have an account? <Link to="/login"> Log In</Link>
         </p>
-        {userMessage && <p className="auth-message">{userMessage}</p>}
       </section>
     </div>
   );

@@ -9,7 +9,7 @@ const AuthCallback = () => {
       const code = new URLSearchParams(window.location.search).get("code");
 
       if (!code) {
-        navigate("/login");
+        //navigate("/login");
         console.log("No code found");
         return;
       }
@@ -20,6 +20,7 @@ const AuthCallback = () => {
 
       if (error) {
         console.error("Auth callback error:", error.message);
+        return;
       }
       navigate("/today");
       console.log("Navigating to /today");
@@ -27,7 +28,11 @@ const AuthCallback = () => {
     handleAuthCallback();
   }, [navigate]);
 
-  return <p>Signing you in</p>;
+  return (
+    <div>
+      <p>Signing you in</p>
+    </div>
+  );
 };
 
 export default AuthCallback;
