@@ -8,6 +8,7 @@ const SignUp = () => {
   const [password, setPassword] = useState("");
   const [userMessage, setUserMessage] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleSignUp = async (e: React.SubmitEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -16,22 +17,31 @@ const SignUp = () => {
       setUserMessage("Passwords do not match.");
       return;
     }
-    const { data, error } = await supabase.auth.signUp({
-      email,
-      password,
-      options: {
-        emailRedirectTo: `${window.location.origin}/auth/callback`,
-      },
-    });
-    console.log(error);
-    console.log(data);
-
-    if (error) {
-      setUserMessage(error.message);
+    if (isSubmitting) {
       return;
     }
+    setIsSubmitting(true);
+    try {
+      const { error } = await supabase.auth.signUp({
+        email,
+        password,
+        options: {
+          emailRedirectTo: `${window.location.origin}/login?verified=true`,
+        },
+      });
 
-    setUserMessage("Check your email to verify your account.");
+      if (error) {
+        setUserMessage(error.message);
+        return;
+      }
+
+      setUserMessage("Check your email to verify your account.");
+    } catch (error) {
+      console.error("An unexpected error occurred.", error);
+      setUserMessage("An unexpected error occurred.");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -68,12 +78,14 @@ const SignUp = () => {
             value={confirmPassword}
             onChange={(e) => setConfirmPassword(e.target.value)}
           />
-          <button type="submit">Create Account</button>
+          <button type="submit" disabled={isSubmitting}>
+            {isSubmitting ? "Creating Account..." : "Create Account"}
+          </button>
         </form>
-        {userMessage && <p className="auth-message">{userMessage}</p>}
         <p className="auth-switch">
           Already have an account? <Link to="/login"> Log In</Link>
         </p>
+        {userMessage && <p className="auth-message">{userMessage}</p>}
       </section>
     </div>
   );

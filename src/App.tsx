@@ -12,7 +12,7 @@ import Login from "./pages/Auth/Login";
 import ProtectedRoute from "./components/ProtectedRoute";
 import GoalIdPage from "./pages/Goals/GoalIdPage";
 import LandingPage from "./pages/LandingPage/LandingPage";
-import AuthCallback from "./pages/Auth/AuthCallback";
+// import AuthCallback from "./pages/Auth/AuthCallback";
 
 function App() {
   return (
@@ -24,7 +24,7 @@ function App() {
             <Route path="/" element={<LandingPage />} />
             <Route path="/signup" element={<SignUp />} />
             <Route path="/login" element={<Login />} />
-            <Route path="/auth/callback" element={<AuthCallback />} />
+            {/* <Route path="/auth/callback" element={<AuthCallback />} /> */}
             <Route element={<ProtectedRoute />}>
               <Route path="/today" element={<Today />} />
               <Route path="/calendarpage" element={<CalendarPage />} />

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import "./auth.css";
 import { supabase } from "../../lib/supabaseClient";
 
@@ -8,7 +8,9 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const [userMessage, setUserMessage] = useState("");
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
 
+  const emailVerified = searchParams.get("verified") === "true";
   const handleLogIn = async (e: React.SubmitEvent<HTMLFormElement>) => {
     e.preventDefault();
     setUserMessage("");
@@ -38,6 +40,11 @@ const Login = () => {
       <section className="auth-card">
         <h2>Welcome back</h2>
         <p>Log in to continue your plan.</p>
+        {emailVerified && (
+          <p className="success-message">
+            Email verified successfully. You can now log in.
+          </p>
+        )}
         <form className="auth-form" onSubmit={handleLogIn}>
           <input
             type="email"
