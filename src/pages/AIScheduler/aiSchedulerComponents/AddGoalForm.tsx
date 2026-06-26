@@ -87,7 +87,7 @@ const AddGoalForm = () => {
         },
         accessToken,
       );
-      const generatePlan = await generateTasks(goal);
+      const generatePlan = await generateTasks(goal, accessToken);
       const scheduledTasks = scheduleTasks(generatePlan.tasks, deadline);
 
       await Promise.all(

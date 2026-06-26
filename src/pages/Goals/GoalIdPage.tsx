@@ -69,12 +69,12 @@ const GoalIdPage = () => {
   };
 
   const handleGenerateTasks = async () => {
-    if (!goal) return;
+    if (!accessToken || !goal) return;
 
     try {
       setGenerating(true);
 
-      const data = await generateTasks(goal);
+      const data = await generateTasks(goal, accessToken);
 
       setGeneratedTasks(data.tasks);
     } catch (error) {

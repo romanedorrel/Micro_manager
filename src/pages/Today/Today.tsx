@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import TodoCard from "../../components/TodoCard";
+import TodoCard from "./TodayComponents/TodoCard";
 import { getTasks, updateTask } from "../../services/tasksApi";
 import type { Task } from "../../types/taskTypes";
 import { useAuth } from "../../context/AuthContext";
@@ -101,7 +101,9 @@ const Today = () => {
           <div className="up-next">
             <div className="up-next-header">
               <h3>Upcoming</h3>
-              <span>View all</span>
+              <Link to="/calendarpage">
+                <span>View all</span>
+              </Link>
             </div>
             <div className="up-next-item">
               <span className="up-next-date">Tomorrow</span>

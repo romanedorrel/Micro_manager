@@ -1,30 +1,30 @@
 import { useState } from "react";
-import { logIn } from "../../services/authApi";
-import { useAuth } from "../../context/AuthContext";
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import "./auth.css";
+import { supabase } from "../../lib/supabaseClient";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [userMessage, setUserMessage] = useState("");
   const navigate = useNavigate();
-  const { setAccessToken } = useAuth();
   const [searchParams] = useSearchParams();
 
   const emailVerified = searchParams.get("verified") === "true";
   const handleLogIn = async (e: React.SubmitEvent<HTMLFormElement>) => {
     e.preventDefault();
     setUserMessage("");
-    try {
-      const data = await logIn({ email, password });
-      setAccessToken(data.access_token);
-      setUserMessage("Welcome back.");
+    const { error } = await supabase.auth.signInWithPassword({
+      email,
+      password,
+    });
 
-      navigate("/today", { replace: true });
-    } catch {
-      setUserMessage("We couldn't find that email and password.");
+    if (error) {
+      setUserMessage(error.message);
+      return;
     }
+
+    navigate("/today");
   };
   return (
     <div className="auth-page">
