@@ -3,9 +3,11 @@ import type { Goal } from "../../../types/goalTypes";
 type GoalCardProps = {
   goal: Goal;
   onClick?: () => void;
+  checked?: boolean;
+  onCheck?: (id: string) => void;
 };
 
-const GoalCard = ({ goal, onClick }: GoalCardProps) => {
+const GoalCard = ({ goal, onClick, checked, onCheck }: GoalCardProps) => {
   const icon =
     goal.priority === "high" ? "🔥" : goal.priority === "medium" ? "📌" : "🎯";
 
@@ -15,7 +17,18 @@ const GoalCard = ({ goal, onClick }: GoalCardProps) => {
     return `${month}/${day}/${year}`;
   };
   return (
-    <button type="button" className="goal-card" onClick={onClick}>
+    <article
+      className="goal-card"
+      onClick={onClick}
+      role="button"
+      tabIndex={0}
+      onKeyDown={(e) => {
+        if (e.key === "Enter" || e.key === " ") {
+          e.preventDefault();
+          onClick?.();
+        }
+      }}
+    >
       <div className="goal-card-header">
         <div className="goal-icon">{icon}</div>
 
@@ -35,7 +48,21 @@ const GoalCard = ({ goal, onClick }: GoalCardProps) => {
 
         {goal.effort && <span>{goal.effort} effort</span>}
       </div>
-    </button>
+
+      <div
+        className="goal-complete-control"
+        onClick={(e) => e.stopPropagation()}
+      >
+        <label>
+          <input
+            type="checkbox"
+            checked={checked}
+            onChange={() => onCheck?.(goal.id)}
+          />
+          <span>Mark as Complete</span>
+        </label>
+      </div>
+    </article>
   );
 };
 

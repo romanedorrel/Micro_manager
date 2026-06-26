@@ -1,11 +1,13 @@
 import { useState, useEffect } from "react";
-import TodoCard from "../../components/TodoCard";
+import TodoCard from "./TodayComponents/TodoCard";
 import { getTasks, updateTask } from "../../services/tasksApi";
 import type { Task } from "../../types/taskTypes";
 import { useAuth } from "../../context/AuthContext";
 import FocusCard from "./TodayComponents/FocusCard";
 import FocusTip from "./TodayComponents/FocusTip";
 import { CalendarDays } from "lucide-react";
+import { Link } from "react-router-dom";
+
 const Today = () => {
   const [tasks, setTasks] = useState<Task[]>([]);
   const { accessToken } = useAuth();
@@ -70,6 +72,7 @@ const Today = () => {
         <header className="today-header">
           <h2>{greeting}</h2>
           <p>{displayDate}</p>
+          <Link to="/scheduler">Add Goals</Link>
         </header>
         <section className="today-main">
           <FocusCard task={focusTask} />
@@ -99,14 +102,18 @@ const Today = () => {
           <div className="up-next">
             <div className="up-next-header">
               <h3>Upcoming</h3>
-              <span>View all</span>
+              <Link to="/calendarpage">
+                <span>View all</span>
+              </Link>
             </div>
             <div className="up-next-item">
               <span className="up-next-date">Tomorrow</span>
               <p>
                 {upcomingTask?.title ||
                   "You're all caught up. Small progress still counts."}{" "}
-                <CalendarDays size={18} />
+                <Link to="/calendarpage">
+                  <CalendarDays size={18} />
+                </Link>
               </p>
             </div>
           </div>
