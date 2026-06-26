@@ -6,6 +6,7 @@ import { useAuth } from "../../context/AuthContext";
 import FocusCard from "./TodayComponents/FocusCard";
 import FocusTip from "./TodayComponents/FocusTip";
 import { CalendarDays } from "lucide-react";
+import { Link } from "react-router-dom";
 const Today = () => {
   const [tasks, setTasks] = useState<Task[]>([]);
   const { accessToken } = useAuth();
@@ -70,6 +71,7 @@ const Today = () => {
         <header className="today-header">
           <h2>{greeting}</h2>
           <p>{displayDate}</p>
+          <Link to="/scheduler">Add Goal</Link>
         </header>
         <section className="today-main">
           <FocusCard task={focusTask} />
@@ -106,7 +108,9 @@ const Today = () => {
               <p>
                 {upcomingTask?.title ||
                   "You're all caught up. Small progress still counts."}{" "}
-                <CalendarDays size={18} />
+                <Link to="/calendarpage">
+                  <CalendarDays size={18} />
+                </Link>
               </p>
             </div>
           </div>

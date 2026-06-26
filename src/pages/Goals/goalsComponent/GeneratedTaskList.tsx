@@ -19,7 +19,7 @@ const GeneratedTaskList = ({
   return (
     <>
       <button type="submit" onClick={onGenerate} disabled={generating}>
-        {generating ? "Generating..." : "Generate Suggestions"}
+        {generating ? "Generating..." : "Regenerate Suggestions"}
       </button>
       {generatedTasks.length > 0 && (
         <div className="generated-tasks">
