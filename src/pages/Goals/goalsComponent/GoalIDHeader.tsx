@@ -1,18 +1,39 @@
 import type { Goal } from "../../../types/goalTypes";
+import { Calendar, Flag, SignalHigh } from "lucide-react";
 type Prop = {
   goal: Goal;
 };
 const GoalIDHeader = ({ goal }: Prop) => {
+  const icon =
+    goal.priority === "high" ? "🔥" : goal.priority === "medium" ? "📌" : "🎯";
+  const formatDateDisplay = (dateString: string) => {
+    const [year, month, day] = dateString.split("-");
+
+    return `${month}/${day}/${year}`;
+  };
+
   return (
-    <div>
-      <div className="goal_detail_header">
-        {" "}
-        <h2>{goal.title}</h2>
+    <div className="goal-detail-hero">
+      <div className="goal-icon goal-detail-icon">{icon}</div>
+      <div className="goal-detail-copy">
+        <h1>{goal.title}</h1>
         <p>{goal.description}</p>
-        <div>
-          <p>{goal.deadline}</p>
-          <p>{goal.priority}</p>
-          <p>{goal.effort}</p>
+        <div className="goal-card-meta">
+          {goal.deadline && (
+            <span>
+              <Calendar size={14} /> Due {formatDateDisplay(goal.deadline)}
+            </span>
+          )}
+          {goal.priority && (
+            <span>
+              <Flag size={14} /> {goal.priority} priority
+            </span>
+          )}
+          {goal.effort && (
+            <span>
+              <SignalHigh size={14} /> {goal.effort} effort
+            </span>
+          )}
         </div>
       </div>
     </div>

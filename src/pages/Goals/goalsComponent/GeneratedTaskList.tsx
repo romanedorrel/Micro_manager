@@ -17,9 +17,9 @@ const GeneratedTaskList = ({
   onSaveGeneratedTask,
 }: Props) => {
   return (
-    <>
-      <button type="submit" onClick={onGenerate} disabled={generating}>
-        {generating ? "Generating..." : "Regenerate Suggestions"}
+    <div className="generated-task-actions">
+      <button type="button" onClick={onGenerate} disabled={generating}>
+        {generating ? "Generating..." : "Generate New Suggestions"}
       </button>
       {generatedTasks.length > 0 && (
         <div className="generated-tasks">
@@ -35,7 +35,7 @@ const GeneratedTaskList = ({
           </button>
         </div>
       )}
-    </>
+    </div>
   );
 };
 

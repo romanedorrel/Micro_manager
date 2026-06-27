@@ -11,7 +11,7 @@ import {
   createTask,
   deleteTask,
 } from "../../services/tasksApi";
-import { ArrowLeft } from "lucide-react";
+import { ArrowLeft, Plus } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import "./goals.css";
 import GoalIDHeader from "./goalsComponent/GoalIDHeader";
@@ -37,6 +37,23 @@ const GoalIdPage = () => {
   const { goalId } = useParams();
   const { accessToken } = useAuth();
   const navigate = useNavigate();
+  const completedTaskCount = tasks.filter(
+    (task) => task.status === "completed",
+  ).length;
+  const progressPercent =
+    tasks.length > 0
+      ? Math.round((completedTaskCount / tasks.length) * 100)
+      : 0;
+
+  const formatDisplayDate = (dateString?: string | null) => {
+    if (!dateString) return "Not set";
+
+    return new Date(dateString).toLocaleDateString("en-US", {
+      month: "short",
+      day: "numeric",
+      year: "numeric",
+    });
+  };
 
   const formatLocalDate = (date: Date) => {
     const year = date.getFullYear();
@@ -225,47 +242,94 @@ const GoalIdPage = () => {
     return <p>Goal not found.</p>;
   }
   return (
-    <div>
-      <button onClick={() => navigate("/goals")}>
-        <ArrowLeft size={28} />
-        Back
+    <div className="goal-detail-page">
+      <button className="back-to-goals-btn" onClick={() => navigate("/goals")}>
+        <ArrowLeft size={18} />
+        Back to Goals
       </button>
-      <GoalIDHeader goal={goal} />
 
-      <TaskList
-        tasks={tasks}
-        onToggleComplete={handleToggleComplete}
-        onEdit={handleEditTask}
-        onDelete={handleDeleteTask}
-      />
-      {!showTaskForm && (
-        <button type="submit" onClick={() => setShowTaskForm(true)}>
-          Add Task
-        </button>
-      )}
+      <section className="goal-detail-section">
+        <GoalIDHeader goal={goal} />
 
-      {showTaskForm && (
-        <TaskForm
-          taskTitle={taskTitle}
-          taskDescription={taskDescription}
-          editingTaskId={editingTaskId}
-          onTitleChange={setTaskTitle}
-          onDescriptionChange={setTaskDescription}
-          onSubmit={handleSubmitTask}
-          onCancelEdit={() => {
-            setEditingTaskId(null);
-            setTaskTitle("");
-            setTaskDescription("");
-            setShowTaskForm(false);
-          }}
+        <section className="goal-stats-grid" aria-label="Goal stats">
+          <div className="goal-stat-card">
+            <span>Progress</span>
+            <strong>{progressPercent}%</strong>
+            <div className="goal-progress-track">
+              <div style={{ width: `${progressPercent}%` }} />
+            </div>
+          </div>
+          <div className="goal-stat-card">
+            <span>Tasks</span>
+            <strong>
+              {completedTaskCount} / {tasks.length}
+            </strong>
+            <p>Completed</p>
+          </div>
+          <div className="goal-stat-card">
+            <span>Created</span>
+            <strong>{formatDisplayDate(goal.created_at)}</strong>
+          </div>
+          <div className="goal-stat-card">
+            <span>Last Updated</span>
+            <strong>{formatDisplayDate(goal.updated_at)}</strong>
+          </div>
+        </section>
+        <div className="goal-section-header">
+          <h2>Tasks</h2>
+          <div className="goal-section-actions">
+            {!showTaskForm && (
+              <button
+                className="new-goal-btn"
+                type="button"
+                onClick={() => setShowTaskForm(true)}
+              >
+                <Plus size={18} />
+                Add Task
+              </button>
+            )}
+            <GeneratedTaskList
+              generatedTasks={generatedTasks}
+              generating={generating}
+              onGenerate={handleGenerateTasks}
+              onSaveGeneratedTask={handleSaveGeneratedTasks}
+            />
+          </div>
+        </div>
+
+        {showTaskForm && (
+          <TaskForm
+            taskTitle={taskTitle}
+            taskDescription={taskDescription}
+            editingTaskId={editingTaskId}
+            onTitleChange={setTaskTitle}
+            onDescriptionChange={setTaskDescription}
+            onSubmit={handleSubmitTask}
+            onCancelEdit={() => {
+              setEditingTaskId(null);
+              setTaskTitle("");
+              setTaskDescription("");
+              setShowTaskForm(false);
+            }}
+          />
+        )}
+
+        <TaskList
+          tasks={tasks}
+          onToggleComplete={handleToggleComplete}
+          onEdit={handleEditTask}
+          onDelete={handleDeleteTask}
         />
+      </section>
+
+      {goal.notes && (
+        <section className="goal-detail-section goal-notes-section">
+          <div className="goal-section-header">
+            <h2>Notes</h2>
+          </div>
+          <p>{goal.notes}</p>
+        </section>
       )}
-      <GeneratedTaskList
-        generatedTasks={generatedTasks}
-        generating={generating}
-        onGenerate={handleGenerateTasks}
-        onSaveGeneratedTask={handleSaveGeneratedTasks}
-      />
     </div>
   );
 };

@@ -14,6 +14,7 @@ import {
 } from "lucide-react";
 import QuotesCard from "./QuotesCard";
 import sagePlant from "../assets/sage_plant.png";
+import logoSmallPlain from "../assets/logo-small-transparent.png";
 
 const SideBar = () => {
   const [profileOpen, setProfileOpen] = useState(false);
@@ -23,30 +24,8 @@ const SideBar = () => {
   const { logout } = useAuth();
   return (
     <div className="sidebar">
-      <div className="profile-section">
-        <button onClick={toggleProfile} aria-label="Open profile menu">
-          <div className="items-left">
-            <UserRound size={18} />
-            <span>Profile</span>
-          </div>
-          <Menu size={18} />
-        </button>
-        {profileOpen && (
-          <ul>
-            <li>
-              <Link to="/settings">
-                <Settings size={14} /> <span>Settings</span>
-              </Link>
-            </li>
-            <li>
-              <Link to="/manageAccount">
-                <UserRound size={14} /> <span>Manage Account</span>
-              </Link>
-            </li>
-          </ul>
-        )}
-      </div>
-      <h2>
+      <h2 className="sidebar-brand">
+        <img src={logoSmallPlain} alt="TrueNorth logo" />
         <span>TrueNorth</span>
       </h2>
       <nav>
@@ -74,20 +53,17 @@ const SideBar = () => {
             </NavLink>
           </li>
           <li>
-            <NavLink to="/scheduler" aria-label="AI Scheduler" title="AI Scheduler">
+            <NavLink
+              to="/scheduler"
+              aria-label="AI Scheduler"
+              title="AI Scheduler"
+            >
               <div className="items-left">
                 <Sparkles size={18} />
                 <span>AI Scheduler</span>
               </div>
             </NavLink>
           </li>
-          {/* <li>
-            <NavLink to="/">
-              <div className="items-left">
-                <House size={18} /> <span>DashBoard</span>
-              </div>
-            </NavLink>
-          </li> */}
         </ul>
       </nav>
       <div className="sidebar-plant" aria-hidden="true">
@@ -97,6 +73,29 @@ const SideBar = () => {
         icon={<Leaf size={20} />}
         quote="Small steps today create a calmer tomorrow."
       />
+      <div className="profile-section">
+        <button onClick={toggleProfile} aria-label="Open profile menu">
+          <div className="items-left">
+            <UserRound size={18} />
+            <span>Profile</span>
+          </div>
+          <Menu size={18} />
+        </button>
+        {profileOpen && (
+          <ul>
+            <li>
+              <Link to="/settings">
+                <Settings size={14} /> <span>Settings</span>
+              </Link>
+            </li>
+            <li>
+              <Link to="/manageAccount">
+                <UserRound size={14} /> <span>Manage Account</span>
+              </Link>
+            </li>
+          </ul>
+        )}
+      </div>
       <div>
         <button
           style={{

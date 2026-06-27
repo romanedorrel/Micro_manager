@@ -1,3 +1,4 @@
+import { Calendar, ChevronRight, Flag, SignalHigh } from "lucide-react";
 import type { Goal } from "../../../types/goalTypes";
 
 type GoalCardProps = {
@@ -29,39 +30,51 @@ const GoalCard = ({ goal, onClick, checked, onCheck }: GoalCardProps) => {
         }
       }}
     >
-      <div className="goal-card-header">
+      <div className="goal-card-main">
         <div className="goal-icon">{icon}</div>
 
-        <div className="goal-title-group">
-          <h3>{goal.title}</h3>
+        <div className="goal-card-body">
+          <div className="goal-title-group">
+            <h3>{goal.title}</h3>
 
-          {goal.description && (
-            <p className="goal-description">{goal.description}</p>
-          )}
+            {goal.description && (
+              <p className="goal-description">{goal.description}</p>
+            )}
+          </div>
+
+          <div className="goal-card-meta">
+            {goal.deadline && (
+              <span>
+                <Calendar size={14} /> Due {formatDateDisplay(goal.deadline)}
+              </span>
+            )}
+
+            {goal.priority && (
+              <span>
+                <Flag size={14} /> {goal.priority} priority
+              </span>
+            )}
+
+            {goal.effort && (
+              <span>
+                <SignalHigh size={14} /> {goal.effort} effort
+              </span>
+            )}
+          </div>
         </div>
       </div>
 
-      <div className="goal-card-meta">
-        {goal.deadline && <span>Due {formatDateDisplay(goal.deadline)}</span>}
-
-        {goal.priority && <span>{goal.priority} priority</span>}
-
-        {goal.effort && <span>{goal.effort} effort</span>}
-      </div>
-
-      <div
-        className="goal-complete-control"
-        onClick={(e) => e.stopPropagation()}
-      >
-        <label>
+      <div className="goal-complete-control">
+        <label aria-label={`Mark ${goal.title} as complete`}>
           <input
             type="checkbox"
             checked={checked}
+            onClick={(e) => e.stopPropagation()}
             onChange={() => onCheck?.(goal.id)}
           />
-          <span>Mark as Complete</span>
         </label>
       </div>
+      <ChevronRight className="goal-card-arrow" size={28} aria-hidden="true" />
     </article>
   );
 };
