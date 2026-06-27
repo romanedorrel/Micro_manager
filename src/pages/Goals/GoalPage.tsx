@@ -166,8 +166,7 @@ const GoalsPage = () => {
             <div>
               <Leaf size={34} />
               <div>
-                <h2>Good morning, Justin</h2>
-                <p>Let's make today meaningful.</p>
+                <h2>Let's make today meaningful.</h2>
               </div>
             </div>
           </section>
