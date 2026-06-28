@@ -1,17 +1,12 @@
-import {
-  ChevronDown,
-  ChevronLeft,
-  ChevronRight,
-  Leaf,
-} from "lucide-react";
+import { ChevronDown, ChevronLeft, ChevronRight, Leaf } from "lucide-react";
+import { useState } from "react";
 
 const formatLocalDate = (date: Date) =>
   date.toLocaleDateString("en-US", { month: "long", day: "numeric" });
 
-const getWeekRange = () => {
-  const today = new Date();
-  const start = new Date(today);
-  start.setDate(today.getDate() - today.getDay());
+const getWeekRange = (date: Date) => {
+  const start = new Date(date);
+  start.setDate(date.getDate() - date.getDay());
 
   const end = new Date(start);
   end.setDate(start.getDate() + 6);
@@ -20,6 +15,28 @@ const getWeekRange = () => {
 };
 
 const CalendarHeader = () => {
+  const [currentWeek, setCurrentWeek] = useState(new Date());
+
+  const handlePrevWeek = () => {
+    setCurrentWeek((prev) => {
+      const date = new Date(prev);
+      date.setDate(date.getDate() - 7);
+      return date;
+    });
+  };
+
+  const handleNextWeek = () => {
+    setCurrentWeek((prev) => {
+      const date = new Date(prev);
+      date.setDate(date.getDate() + 7);
+      return date;
+    });
+  };
+
+  const handleToday = () => {
+    setCurrentWeek(new Date());
+  };
+
   return (
     <header className="calendar-header">
       <div className="calendar-heading">
@@ -30,17 +47,36 @@ const CalendarHeader = () => {
 
       <div className="calendar-toolbar">
         <div className="calendar-date-controls">
-          <button className="calendar-icon-btn" aria-label="Previous week">
+          <button
+            onClick={() => {
+              handlePrevWeek();
+            }}
+            className="calendar-icon-btn"
+            aria-label="Previous week"
+          >
             <ChevronLeft size={17} />
           </button>
-          <button className="calendar-icon-btn" aria-label="Next week">
+          <button
+            onClick={() => {
+              handleNextWeek();
+            }}
+            className="calendar-icon-btn"
+            aria-label="Next week"
+          >
             <ChevronRight size={17} />
           </button>
-          <p className="calendar-range">{getWeekRange()}</p>
+          <p className="calendar-range">{getWeekRange(currentWeek)}</p>
         </div>
 
         <div className="calendar-actions">
-          <button className="calendar-today-btn">Today</button>
+          <button
+            onClick={() => {
+              handleToday();
+            }}
+            className="calendar-today-btn"
+          >
+            Today
+          </button>
           <button className="calendar-view-btn">
             <span>Week</span>
             <ChevronDown size={16} />

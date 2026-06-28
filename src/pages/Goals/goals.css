@@ -698,19 +698,13 @@
   color: var(--text-on-dark);
 }
 
-@media (max-width: 1180px) {
+@media (max-width: 1400px) {
   .goals-workspace {
     grid-template-columns: 1fr;
   }
 
   .goals-insights {
-    position: static;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-
-  .goals-image-card,
-  .goals-quote-card {
-    grid-column: 1 / -1;
+    display: none;
   }
 }
 
@@ -747,10 +741,6 @@
 
   .goal-stats-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-
-  .goals-insights {
-    grid-template-columns: 1fr;
   }
 }
 
