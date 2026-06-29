@@ -5,7 +5,7 @@ const AddGoalPage = () => {
   return (
     <main className="add-goal-page">
       <div className="add-goal-header">
-        <h1>Add Goal</h1>
+        <h1>Create a New Goal</h1>
         <p>Create a new goal and let AI build the plan.</p>
       </div>
 

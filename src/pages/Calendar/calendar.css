@@ -12,6 +12,12 @@
   background: rgba(252, 252, 250, 0.94);
   box-shadow: var(--shadow-soft);
 }
+.calendar-wrapper {
+  overflow-x: auto;
+  overflow-y: hidden;
+
+  scrollbar-width: thin;
+}
 
 .calendar-card {
   min-width: 0;
@@ -115,7 +121,7 @@
       14,
       var(--calendar-row-height)
     );
-  min-width: 0;
+  min-width: 800px;
   overflow: hidden;
   border: 1px solid rgba(94, 110, 90, 0.16);
   border-radius: 14px;

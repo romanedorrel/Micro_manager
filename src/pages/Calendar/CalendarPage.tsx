@@ -51,7 +51,9 @@ const CalendarPage = () => {
     <main className="calendar-page has-detail">
       <section className="calendar-card">
         <CalendarHeader />
-        <WeekView weekData={groupedTasks} setSelectedDay={setSelectedDay} />
+        <div className="calendar-wrapper">
+          <WeekView weekData={groupedTasks} setSelectedDay={setSelectedDay} />
+        </div>
       </section>
       <Detailed selectedDay={selectedDay} />
     </main>

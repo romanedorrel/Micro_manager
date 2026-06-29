@@ -1,4 +1,4 @@
-import { ChevronDown, ChevronLeft, ChevronRight, Leaf } from "lucide-react";
+import { ChevronLeft, ChevronRight, Leaf } from "lucide-react";
 import { useState } from "react";
 
 const formatLocalDate = (date: Date) =>
@@ -77,10 +77,10 @@ const CalendarHeader = () => {
           >
             Today
           </button>
-          <button className="calendar-view-btn">
+          {/* <button className="calendar-view-btn">
             <span>Week</span>
             <ChevronDown size={16} />
-          </button>
+          </button> */}
         </div>
       </div>
     </header>
