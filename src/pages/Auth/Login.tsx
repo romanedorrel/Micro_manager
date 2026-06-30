@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import "./auth.css";
 import { supabase } from "../../lib/supabaseClient";
+import { getMyProfile } from "../../services/profileApi";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -14,7 +15,10 @@ const Login = () => {
   const handleLogIn = async (e: React.SubmitEvent<HTMLFormElement>) => {
     e.preventDefault();
     setUserMessage("");
-    const { error } = await supabase.auth.signInWithPassword({
+    const {
+      data: { session },
+      error,
+    } = await supabase.auth.signInWithPassword({
       email,
       password,
     });
@@ -23,8 +27,22 @@ const Login = () => {
       setUserMessage(error.message);
       return;
     }
+    if (!session?.access_token) {
+      setUserMessage("Unable to authenticate. Please try again.");
+      return;
+    }
+    try {
+      const profile = await getMyProfile(session.access_token);
 
-    navigate("/today");
+      if (profile.onboarding_completed) {
+        navigate("/today");
+      } else {
+        navigate("/welcome");
+      }
+    } catch (error) {
+      console.error("Failed to load profile", error);
+      setUserMessage("Failed to load profile. Please try again.");
+    }
   };
   return (
     <div className="auth-page">

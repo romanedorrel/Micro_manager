@@ -6,6 +6,7 @@ import goalRoutes from "./routes/goalRoutes";
 import taskRoutes from "./routes/taskRoutes";
 import aiRoutes from "./routes/aiRoutes";
 import { authMiddleware } from "./middleware/authMiddleware";
+import profileRoutes from "./routes/profileRoutes";
 
 const app = express();
 const PORT = 3000;
@@ -24,7 +25,7 @@ app.use(
 );
 
 app.use(express.json());
-
+app.use("/api/profile", authMiddleware, profileRoutes);
 app.use("/api/goals", authMiddleware, goalRoutes);
 app.use("/api/tasks", authMiddleware, taskRoutes);
 app.use("/api/ai", authMiddleware, aiRoutes);
