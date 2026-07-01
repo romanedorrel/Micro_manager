@@ -18,6 +18,28 @@ const CalendarPage = () => {
   const [groupedTasks, setGroupedTasks] = useState<Map<string, Task[]>>(
     new Map(),
   );
+  const [currentWeek, setCurrentWeek] = useState(new Date());
+
+  const handlePrevWeek = () => {
+    setCurrentWeek((prev) => {
+      const date = new Date(prev);
+      date.setDate(date.getDate() - 7);
+      return date;
+    });
+  };
+
+  const handleNextWeek = () => {
+    setCurrentWeek((prev) => {
+      const date = new Date(prev);
+      date.setDate(date.getDate() + 7);
+      return date;
+    });
+  };
+
+  const handleToday = () => {
+    setCurrentWeek(new Date());
+  };
+
   const { accessToken } = useAuth();
   useEffect(() => {
     if (!accessToken) return;
@@ -50,9 +72,18 @@ const CalendarPage = () => {
   return (
     <main className="calendar-page has-detail">
       <section className="calendar-card">
-        <CalendarHeader />
+        <CalendarHeader
+          currentWeek={currentWeek}
+          handlePrevWeek={handlePrevWeek}
+          handleNextWeek={handleNextWeek}
+          handleToday={handleToday}
+        />
         <div className="calendar-wrapper">
-          <WeekView weekData={groupedTasks} setSelectedDay={setSelectedDay} />
+          <WeekView
+            currentWeek={currentWeek}
+            weekData={groupedTasks}
+            setSelectedDay={setSelectedDay}
+          />
         </div>
       </section>
       <Detailed selectedDay={selectedDay} />

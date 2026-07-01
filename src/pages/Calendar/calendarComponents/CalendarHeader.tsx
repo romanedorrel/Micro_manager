@@ -1,5 +1,11 @@
 import { ChevronLeft, ChevronRight, Leaf } from "lucide-react";
-import { useState } from "react";
+
+type CalendarHeaderProps = {
+  currentWeek: Date;
+  handlePrevWeek: () => void;
+  handleNextWeek: () => void;
+  handleToday: () => void;
+};
 
 const formatLocalDate = (date: Date) =>
   date.toLocaleDateString("en-US", { month: "long", day: "numeric" });
@@ -14,28 +20,33 @@ const getWeekRange = (date: Date) => {
   return `${formatLocalDate(start)} - ${formatLocalDate(end)}, ${end.getFullYear()}`;
 };
 
-const CalendarHeader = () => {
-  const [currentWeek, setCurrentWeek] = useState(new Date());
+const CalendarHeader = ({
+  currentWeek,
+  handlePrevWeek,
+  handleNextWeek,
+  handleToday,
+}: CalendarHeaderProps) => {
+  // const [currentWeek, setCurrentWeek] = useState(new Date());
 
-  const handlePrevWeek = () => {
-    setCurrentWeek((prev) => {
-      const date = new Date(prev);
-      date.setDate(date.getDate() - 7);
-      return date;
-    });
-  };
+  // const handlePrevWeek = () => {
+  //   setCurrentWeek((prev) => {
+  //     const date = new Date(prev);
+  //     date.setDate(date.getDate() - 7);
+  //     return date;
+  //   });
+  // };
 
-  const handleNextWeek = () => {
-    setCurrentWeek((prev) => {
-      const date = new Date(prev);
-      date.setDate(date.getDate() + 7);
-      return date;
-    });
-  };
+  // const handleNextWeek = () => {
+  //   setCurrentWeek((prev) => {
+  //     const date = new Date(prev);
+  //     date.setDate(date.getDate() + 7);
+  //     return date;
+  //   });
+  // };
 
-  const handleToday = () => {
-    setCurrentWeek(new Date());
-  };
+  // const handleToday = () => {
+  //   setCurrentWeek(new Date());
+  // };
 
   return (
     <header className="calendar-header">

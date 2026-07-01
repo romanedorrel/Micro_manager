@@ -8,14 +8,19 @@ type WeekDay = {
 };
 
 type WeekViewProps = {
+  currentWeek: Date;
   weekData: Map<string, Task[]>;
   setSelectedDay: (day: WeekDay) => void;
 };
 
-const WeekView = ({ weekData, setSelectedDay }: WeekViewProps) => {
+const WeekView = ({ currentWeek, weekData, setSelectedDay }: WeekViewProps) => {
   return (
     <section className="week-view">
-      <WeekGrid weekData={weekData} onSelectedDay={setSelectedDay} />
+      <WeekGrid
+        currentWeek={currentWeek}
+        weekData={weekData}
+        onSelectedDay={setSelectedDay}
+      />
     </section>
   );
 };

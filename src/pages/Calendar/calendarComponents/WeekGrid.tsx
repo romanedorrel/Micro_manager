@@ -9,6 +9,7 @@ type WeekDay = {
 };
 
 type WeekGridProps = {
+  currentWeek: Date;
   weekData: Map<string, Task[]>;
   onSelectedDay: (day: WeekDay) => void;
 };
@@ -23,16 +24,13 @@ const formatLocalDate = (date: Date) => {
 
 // Creates an array representing the current week (7 days).
 // Each day starts with an empty tasks array that will be populated later.
-const getCurrentWeek = (): WeekDay[] => {
-  // Get the current date
-  const today = new Date();
-
+const getCurrentWeek = (currentWeek: Date): WeekDay[] => {
   // Create a copy of today's date so we don't modify the original.
-  const startOfWeek = new Date(today);
+  const startOfWeek = new Date(currentWeek);
 
   // Move back to Sunday, the first day of the current week
   // by substracting the number of days since the start of the week.
-  startOfWeek.setDate(today.getDate() - today.getDay());
+  startOfWeek.setDate(currentWeek.getDate() - currentWeek.getDay());
 
   // Create an array of the 7 days in the current week.
   return Array.from({ length: 7 }, (_, i) => {
@@ -81,9 +79,9 @@ const getTaskGridStyle = (dayIndex: number, taskIndex: number) =>
     "--event-span": taskIndex % 3 === 1 ? 3 : 2,
   }) as CSSProperties;
 
-const WeekGrid = ({ weekData, onSelectedDay }: WeekGridProps) => {
+const WeekGrid = ({ currentWeek, weekData, onSelectedDay }: WeekGridProps) => {
   // Generate the current week's seven days.
-  const weekDays = getCurrentWeek();
+  const weekDays = getCurrentWeek(currentWeek);
 
   return (
     <section className="week-grid" aria-label="Weekly calendar schedule">
