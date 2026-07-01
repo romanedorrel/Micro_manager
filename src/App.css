@@ -4,14 +4,30 @@
   z-index: 5;
   display: flex;
   width: clamp(250px, 16vw, 318px);
-  min-height: 100vh;
+  height: 100vh;
+  min-height: 0;
   flex-direction: column;
   padding: clamp(28px, 3vw, 48px) clamp(16px, 1.6vw, 28px) 24px;
+  overflow-y: auto;
+  overflow-x: hidden;
   border-right: 1px solid rgba(252, 252, 250, 0.18);
   background:
     linear-gradient(180deg, rgba(94, 110, 90, 0.96), rgba(75, 91, 71, 0.98)),
     var(--sage-700);
   box-shadow: 18px 0 44px rgba(47, 59, 49, 0.16);
+}
+
+.sidebar::-webkit-scrollbar {
+  width: 6px;
+}
+
+.sidebar::-webkit-scrollbar-thumb {
+  border-radius: 999px;
+  background: rgba(252, 252, 250, 0.22);
+}
+
+.sidebar::-webkit-scrollbar-track {
+  background: transparent;
 }
 
 .sidebar h2 {
