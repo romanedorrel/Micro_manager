@@ -78,6 +78,11 @@ const WelcomePage = () => {
               <button onClick={() => setStep(0)}>Back</button>
               <button onClick={() => setStep(2)}>Continue</button>
             </div>
+            <div className="welcome-progress">
+              {[0, 1, 2, 3].map((index) => (
+                <span key={index} className={step === index ? "active" : ""} />
+              ))}
+            </div>
           </>
         )}
 
@@ -112,6 +117,11 @@ const WelcomePage = () => {
               <button onClick={() => setStep(1)}>Back</button>
               <button onClick={() => setStep(3)}>Continue</button>
             </div>
+            <div className="welcome-progress">
+              {[0, 1, 2, 3].map((index) => (
+                <span key={index} className={step === index ? "active" : ""} />
+              ))}
+            </div>
           </>
         )}
 
@@ -126,6 +136,11 @@ const WelcomePage = () => {
             <div className="welcome-actions">
               <button onClick={() => setStep(2)}>Back</button>
               <button onClick={handleFinish}>Create My First Goal</button>
+            </div>
+            <div className="welcome-progress">
+              {[0, 1, 2, 3].map((index) => (
+                <span key={index} className={step === index ? "active" : ""} />
+              ))}
             </div>
           </>
         )}

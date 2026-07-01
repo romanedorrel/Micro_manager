@@ -1,0 +1,177 @@
+.welcome-page {
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  padding: 32px;
+  background: linear-gradient(180deg, #f7f8f4 0%, #eef4ec 100%);
+}
+
+.welcome-card {
+  width: min(100%, 620px);
+  min-height: 680px;
+  padding: 36px;
+  border: 1px solid #dce2d8;
+  border-radius: 30px;
+  background: rgba(252, 252, 250, 0.94);
+  box-shadow: 0 28px 70px rgba(60, 80, 60, 0.14);
+  text-align: center;
+}
+
+.welcome-eyebrow {
+  margin: 0 0 10px;
+  color: #7d9277;
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.welcome-card h1,
+.welcome-card h2 {
+  margin: 0;
+  color: #2f3b31;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(2.2rem, 5vw, 3.4rem);
+  line-height: 1;
+}
+
+.welcome-intro,
+.welcome-support,
+.welcome-card p {
+  color: #6f786f;
+  line-height: 1.6;
+}
+
+.welcome-image {
+  width: 100%;
+  max-height: 300px;
+  margin: 28px 0;
+  border-radius: 24px;
+  object-fit: cover;
+  box-shadow: 0 18px 40px rgba(60, 80, 60, 0.12);
+}
+
+.welcome-card button {
+  margin-top: 18px;
+  border: none;
+  border-radius: 999px;
+  padding: 14px 28px;
+  background: #7d9277;
+  color: white;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.welcome-card button:hover {
+  background: #5e6e5a;
+}
+.welcome-step {
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+  margin: 22px 0;
+  text-align: left;
+}
+
+.welcome-step span {
+  display: grid;
+  place-items: center;
+  flex: 0 0 36px;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: #e7ece4;
+  color: #5e6e5a;
+  font-weight: 800;
+}
+
+.welcome-step h3 {
+  margin: 0 0 6px;
+  color: #2f3b31;
+  font-size: 1.05rem;
+}
+
+.welcome-step p {
+  margin: 0;
+}
+
+.welcome-actions {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 28px;
+}
+
+.welcome-actions button:first-child {
+  background: transparent;
+  color: #5e6e5a;
+  border: 1px solid #b7c3b2;
+}
+
+.welcome-actions button:first-child:hover {
+  background: #e7ece4;
+}
+.welcome-step {
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+  margin: 22px 0;
+  text-align: left;
+}
+
+.welcome-step span {
+  display: grid;
+  place-items: center;
+  flex: 0 0 36px;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: #e7ece4;
+  color: #5e6e5a;
+  font-weight: 800;
+}
+
+.welcome-step h3 {
+  margin: 0 0 6px;
+  color: #2f3b31;
+  font-size: 1.05rem;
+}
+
+.welcome-step p {
+  margin: 0;
+}
+
+.welcome-actions {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 28px;
+}
+
+.welcome-actions button:first-child {
+  background: transparent;
+  color: #5e6e5a;
+  border: 1px solid #b7c3b2;
+}
+
+.welcome-actions button:first-child:hover {
+  background: #e7ece4;
+}
+.welcome-progress {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 28px;
+}
+
+.welcome-progress span {
+  width: 8px;
+  height: 8px;
+  border-radius: 999px;
+  background: #dce2d8;
+}
+
+.welcome-progress span.active {
+  width: 24px;
+  background: #7d9277;
+}

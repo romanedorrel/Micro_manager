@@ -3,15 +3,30 @@ import { createAuthedSupabaseClient } from "../lib/supabaseServer";
 export const getProfile = async (userId: string, accessToken: string) => {
   const supabase = createAuthedSupabaseClient(accessToken);
 
-  const { data, error } = await supabase
+  const { data: existingProfile, error: getError } = await supabase
     .from("profiles")
     .select("*")
     .eq("id", userId)
     .maybeSingle();
 
-  if (error) throw error;
+  if (getError) throw getError;
 
-  return data;
+  if (existingProfile) {
+    return existingProfile;
+  }
+
+  const { data: newProfile, error: createError } = await supabase
+    .from("profiles")
+    .insert({
+      id: userId,
+      onboarding_completed: false,
+    })
+    .select("*")
+    .single();
+
+  if (createError) throw createError;
+
+  return newProfile;
 };
 
 export const completeOnboarding = async (
